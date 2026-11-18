@@ -1,5 +1,4 @@
-<!doctype html>
-<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
 <title>ギャルの今日の3曲</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap">
@@ -40,6 +39,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px dashed var(
 .prof h3{margin:0;font-size:13px;font-weight:400;color:var(--red)}
 .prof dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:0 6px}
 .prof dt{color:var(--sub)}.prof dd{margin:0}
+.prof .profmore{align-self:flex-end;font-size:12px}
 
 main{min-width:0;padding:14px 18px 24px;display:flex;flex-direction:column;gap:16px}
 .counter{text-align:center;font-size:13px;color:var(--sub)}
@@ -156,7 +156,7 @@ input[type=text]{width:100%;min-width:0;font:inherit;font-size:14px;padding:5px 
     <div class="menu">
       <a href="#play"><img class="pix ico" data-ico="note" width="16" height="16" alt="">今日の3曲ひろば</a>
       <a href="https://www.youtube.com/playlist?list=PLxfDWMKr7Nj5Jz5uYBF5tg-KGKDjhwA-d" target="_blank" rel="noopener"><img class="pix ico" data-ico="heart" width="16" height="16" alt="">チッケムひろば</a>
-      <a href="#prof"><img class="pix ico" data-ico="star" width="16" height="16" alt="">みかちのプロフ</a>
+      <a href="prof.html"><img class="pix ico" data-ico="star" width="16" height="16" alt="">みかちのプロフ</a>
     </div>
     <div class="prof" id="prof">
       <h3>★みかちのプロフ★</h3>
@@ -166,6 +166,7 @@ input[type=text]{width:100%;min-width:0;font:inherit;font-size:14px;padding:5px 
         <dt>とくぎ</dt><dd>イントロ3秒で曲当て</dd>
         <dt>推し</dt><dd>ME:I 文寧ちゃん</dd>
       </dl>
+      <a class="profmore" href="prof.html">▶前略プロフを見る</a>
     </div>
   </nav>
 
@@ -363,20 +364,20 @@ const CHEERS={
   "せつない":"ちょっとしんどい日だった？曲で気持ち整えてるのえらすぎる。みかちはずっと味方だよ。",
   "戦闘力":"戦う準備できてるじゃん。終わったら自分にご褒美ね！"
 };
-const OPENERS=["おつ〜！3曲ぜんぶ聴いたよ","まって、選曲よすぎて全部リピった","はいはい今日の3曲、みかちが受け取りました"];
+const OPENERS=["おつ〜！3曲ぜんぶ聴いたんだけど","まって、選曲よすぎて全部リピったんだけど","はいはい今日の3曲、みかちが受け取ったっしょ"];
 /* AIなし（簡易版）用。曲の中身には触れず、選んだ人の気持ちに寄りそうセリフ */
 const GENERIC=[
-  "{t}を今日の1曲に入れるの、ちゃんと自分の気分をわかってる人の選び方だと思う。",
-  "{t}ってさ、聴く日によって刺さるところが変わる曲じゃない？今日はどこが響いたのか、ちょっと気になる。",
-  "{t}を選んだってことは、今日のあなたの中に、この曲と同じ温度の何かがあったんだよね。",
-  "{t}、流しっぱなしより、ちゃんと聴きたくなるタイプの曲だよね。そういう時間を作れてるの、えらい。",
-  "{t}を3曲の中に置くの、並びのバランス感覚がいい。気分の真ん中をちゃんと押さえてる。",
-  "{t}みたいな曲を選ぶ日って、ほんとは自分を励ましたい日だったりするんだよね。"
+  "{t}を今日の1曲に入れるの、自分の気分ちゃんとわかってる人の選び方じゃん。そういうとこ、まじで信用できる。",
+  "{t}ってさ、聴く日によって刺さるとこ変わる曲じゃね？今日はどこが響いたのか、ちょっと気になるんだけど。",
+  "{t}選んだってことは、今日のあなたの中に、この曲と同じ温度の何かがあったっしょ。わかる、そういう日あるし。",
+  "{t}、流しっぱなしより、ちゃんと聴きたくなるタイプの曲じゃん？そういう時間作れてるの、えらすぎ。",
+  "{t}を3曲の中に置くの、並びのバランス感覚よくない？気分の真ん中ちゃんと押さえてて、てかセンスあるし。",
+  "{t}みたいな曲選ぶ日ってさ、ほんとは自分を励ましたい日だったりするじゃん。それな、って思った人いるっしょ。"
 ];
 const GENERIC_CHEERS=[
-  "3曲並べると、今日のあなたが見えてくる。無理に元気出さなくていいけど、好きなものをちゃんと選べてる時点で大丈夫。",
-  "選んだ曲って、その日の自分のいちばん正直なメモだと思う。今日のメモ、悪くないよ。明日もまた聴かせて。",
-  "曲で気持ちを整えられる人は強い。今日もちゃんと自分の機嫌をとれてるじゃん。そのままでいこ。"
+  "3曲並べると、今日のあなたが見えてくるんだよね。無理に元気出さなくていいけど、好きなものちゃんと選べてる時点で大丈夫っしょ。",
+  "選んだ曲って、その日の自分のいちばん正直なメモじゃね？今日のメモ、悪くないじゃん。明日もまた聴かせてよ。",
+  "曲で気持ち整えられる人って強いし。今日もちゃんと自分の機嫌とれてるじゃん。ウケるくらい安定してる、そのままでいこ。"
 ];
 const GENERIC_LABELS=["今日もがんばってる","自分の好きをわかってる","ちゃんと前を向いてる","ちょっとひと休みしたい"];
 const shuffle=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
@@ -395,8 +396,8 @@ function buildSlots(){
   EXAMPLE.forEach((ex,i)=>{
     const d=document.createElement("div");d.className="slot";
     d.innerHTML=`<div class="num">${i+1}</div>
-      <input type="text" id="t${i}" value="${esc(ex.t)}" placeholder="曲名（うろ覚えでもOK）" aria-label="${i+1}曲目の曲名">
-      <input type="text" class="art" id="a${i}" value="${esc(ex.a)}" placeholder="アーティスト（空でもOK）" aria-label="${i+1}曲目のアーティスト">`;
+      <input type="text" id="t${i}" value="" placeholder="${esc("例）"+ex.t)}" aria-label="${i+1}曲目の曲名（うろ覚えでもOK）">
+      <input type="text" class="art" id="a${i}" value="" placeholder="${esc(ex.a?"例）"+ex.a:"アーティスト（空でもOK）")}" aria-label="${i+1}曲目のアーティスト（空でもOK）">`;
     box.appendChild(d);
   });
 }
@@ -440,7 +441,9 @@ function getSample(){
 }
 /* 遊ぶ人が自分のClaudeのチャットに貼る質問文 */
 function chatPrompt(songs,rec){
-  const list=songs.map((s,i)=>`${i+1}. 曲名:「${s.t}」 / アーティスト: ${s.a||"（未記入）"}`).join("\n");
+  const list=songs.map((s,i)=>s.known
+    ?`${i+1}. 曲名:「${s.title}」 / アーティスト: ${s.artist||"（未記入）"}（本人に確認済み）`
+    :`${i+1}. 曲名:「${s.t}」 / アーティスト: ${s.a||"（未記入）"}`).join("\n");
   return `あなたは「みかち」というギャルのキャラクターになりきってください。見た目と口調はギャルだけど、中身は思慮深くて鋭い子です。音楽の知識があり、人の気持ちの奥まで見ています。
 私が今日聴いた3曲を、みかちとしてレビューしてください。
 
@@ -459,7 +462,7 @@ ${rec.url}
 コメント欄の声: ${rec.fans||"（なし）"}
 
 # 口調
-ギャル語は語尾や相づち程度にして、中身は落ち着いて具体的に。「えぐい」「最高」の連発はしないでください。絵文字は使わないでください。`;
+ギャルの話し言葉で、敬語は使わない。語尾は「〜じゃね？」「〜じゃん？」「〜っしょ」「〜だし」「〜くない？」、相づちは「わかる」「ウケる」「まじ」「それな」「てか」などを自然にまぜる。1つのコメントに2〜3個までにして、同じ言い回しを続けない。「ウケる」は面白いことや意外なことにだけ使い、せつない話には使わない。口調はギャルでも、言っている中身は落ち着いていて思慮深く具体的に。「えぐい」「やばい」「最高」だけで済ませない。絵文字は使わない。`;
 }
 /* 1回目: どの曲か特定する */
 function identifyPrompt(songs){
@@ -511,7 +514,7 @@ ${list}
 ## 2. 1曲ずつレビューする（comment、80〜130字）
 - まず、その曲ならではの具体的なポイントを1〜2個押さえる。例: リズムのノリ、目立つ音、ボーカルの歌い方、サビへの持っていき方、構成、歌詞の視点、タイアップなどの背景。
 - そのうえで、表面的な感想で終わらせず、一歩踏み込んだ鋭い気づきを1つ入れる。例: その曲が本当に描いているもの（明るい曲調の裏にある寂しさなど）、なぜ今日この曲を選ぶ人の気持ちに響くのか、聴き手が見落としがちなポイント。
-- テンションで押し切らない。ギャル語は語尾や相づち程度にして、中身は落ち着いて思慮深く。「えぐい」「最高」「やばい」を連発しない。「いい曲」だけの中身のないほめ方は禁止。
+- テンションで押し切らない。口調はギャルのままで、中身は落ち着いて思慮深く。「えぐい」「最高」「やばい」を連発しない。「いい曲」だけの中身のないほめ方は禁止。
 - 自信のない細かい事実（リリース年、作曲者など）は書かない。
 - 「※特定できなかった曲」は、知ったかぶりせず、曲名とアーティスト名から受ける印象だけで短く話す（「聴いたことないけど、タイトル的に〜」のように）。
 - 歌詞をそのまま引用しない。
@@ -529,7 +532,7 @@ ${list}
 ${recos}
 
 # 口調
-ギャル語でフレンドリー（「〜じゃん」「まじ」「〜すぎ」など）。でも落ち着いていて、言っている中身は思慮深く具体的。絵文字は使わない。
+ギャルの話し言葉で、敬語は使わない。語尾は「〜じゃね？」「〜じゃん？」「〜っしょ」「〜だし」「〜くない？」、相づちは「わかる」「ウケる」「まじ」「それな」「てか」などを自然にまぜる。1つのコメントに2〜3個までにして、同じ言い回しを続けない。「ウケる」は面白いことや意外なことにだけ使い、せつない話には使わない。口調はギャルでも、言っている中身は落ち着いていて思慮深く具体的に。「えぐい」「やばい」「最高」だけで済ませない。絵文字は使わない。
 
 # 出力
 次の形のJSONだけを返す:
@@ -566,6 +569,31 @@ function showListening(label){
   const r=addRow(`<div class="listen"><img class="pix bob" src="${MIKACHI_PX}" width="64" height="57" alt="">${n}<span>${esc(label)}</span></div>`);
   r.scrollIntoView({block:"nearest",behavior:"smooth"});
   return r;
+}
+/* AIがない場所用：iTunesの曲検索で候補を探す（無料・キー不要）。通信できなければ null */
+const normT=x=>String(x||"").toLowerCase().normalize("NFKC").replace(/[\s　・'"’!！?？.,、。〜~ー-]/g,"");
+async function searchSongs(s){
+  const once=async term=>{
+    const ctl=new AbortController();const tm=setTimeout(()=>ctl.abort(),7000);
+    try{
+      const u="https://itunes.apple.com/search?country=JP&lang=ja_jp&media=music&entity=song&limit=15&term="+encodeURIComponent(term);
+      const r=await fetch(u,{signal:ctl.signal});if(!r.ok)return null;
+      const d=await r.json();return Array.isArray(d.results)?d.results:[];
+    }catch(e){return null;}finally{clearTimeout(tm);}
+  };
+  let res=await once((s.t+" "+s.a).trim());
+  if(res&&!res.length&&s.a)res=await once(s.t);
+  if(!res)return null;
+  const seen=new Set(),out=[];
+  for(const x of res){
+    if(!x.trackName)continue;
+    const title=String(x.trackName).replace(/\s*[(（\[][^)）\]]*(ver|version|remix|instrumental|inst|カラオケ|off vocal|live|ライブ)[^)）\]]*[)）\]]/ig,"").replace(/\s+-\s+.*$/,"").trim();
+    const key=normT(title)+"|"+normT(x.artistName);
+    if(seen.has(key))continue;seen.add(key);
+    out.push({title,artist:String(x.artistName||"")});
+    if(out.length>=3)break;
+  }
+  return out;
 }
 function askWhich(i,s,cands){
   return new Promise(async resolve=>{
@@ -609,12 +637,31 @@ async function run(){
     if(ids&&cands.length){
       const choice=await askWhich(i,s,cands);
       if(choice){s.known=true;s.title=String(choice.title);s.artist=String(choice.artist||"");}
-      else{s.known=false;await say(`<div class="tags"><span class="tag">${i+1}曲目</span><span class="tag unknown">みかち知らない曲かも</span></div>そっか〜、じゃあ「${esc(s.t)}」はみかちの知らない曲だ。タイトルの雰囲気で感想言うね！`);}
+      else{s.known=false;await say(`<div class="tags"><span class="tag">${i+1}曲目</span><span class="tag unknown">みかち知らない曲かも</span></div>そっか〜、じゃあ「${esc(s.t)}」はみかちの知らない曲だわ。タイトルの雰囲気で感想言うけど、いいっしょ？`);}
       continue;
     }
     if(ids){
+      s.known=false;s.checked=true;
+      await say(`<div class="tags"><span class="tag">${i+1}曲目</span><span class="tag unknown">みかち知らない曲かも</span></div>「${esc(s.t)}」…ごめん、これはみかちの知識にないかも。タイトルの雰囲気で感想言うし！`);
+      continue;
+    }
+    /* AIが使えないときは、曲検索の候補で確かめる */
+    listening=showListening(`みかちが${i+1}曲目を探してるとこ…`);
+    const found=await searchSongs(s);
+    listening.remove();
+    if(found==null)continue;
+    s.checked=true;
+    const top=found[0];
+    if(top&&s.a&&normT(top.title)===normT(s.t)&&(normT(top.artist).includes(normT(s.a))||normT(s.a).includes(normT(top.artist)))){
+      s.known=true;s.title=top.title;s.artist=top.artist;continue;
+    }
+    if(found.length){
+      const choice=await askWhich(i,s,found);
+      if(choice){s.known=true;s.title=choice.title;s.artist=choice.artist;}
+      else{s.known=false;await say(`<div class="tags"><span class="tag">${i+1}曲目</span><span class="tag unknown">みかち知らない曲かも</span></div>そっか〜、じゃあ「${esc(s.t)}」はみかちの知らない曲だわ。そのまま感想言うっしょ！`);}
+    }else{
       s.known=false;
-      await say(`<div class="tags"><span class="tag">${i+1}曲目</span><span class="tag unknown">みかち知らない曲かも</span></div>「${esc(s.t)}」…ごめん、これはみかちの知識にないかも。タイトルの雰囲気で感想言うね！`);
+      await say(`<div class="tags"><span class="tag">${i+1}曲目</span><span class="tag unknown">みかち知らない曲かも</span></div>「${esc(s.t)}」…探したけど見つかんなかったんだけど、ウケる。そのまま感想言うね！`);
     }
   }
 
@@ -634,10 +681,10 @@ async function run(){
     const r=(ai&&ai.songs[i])||{};
     const v=VIBES.includes(r.vibe)?r.vibe:null;if(v)vs.push(v);
     const title=s.known?s.title:s.t, artist=s.known?s.artist:s.a;
-    const line=r.comment?String(r.comment):gen[i%gen.length].replaceAll("{t}",`「${s.t}」`);
+    const line=r.comment?String(r.comment):gen[i%gen.length].replaceAll("{t}",`「${title}」`);
     let tags=`<span class="tag">${i+1}曲目</span>`+(v?`<span class="tag vibe">みかち判定：${v}</span>`:"");
     if(s.known&&(s.title!==s.t||(s.a&&s.artist!==s.a)||!s.a))tags+=`<span class="tag guess">${esc(artist)}「${esc(title)}」</span>`;
-    if(ids&&!s.known)tags+=`<span class="tag unknown">知らない曲</span>`;
+    if((ids||s.checked)&&!s.known)tags+=`<span class="tag unknown">知らない曲</span>`;
     await say(`<div class="tags">${tags}</div>${esc(line)}`);
     out.push(`${i+1}. ${title}${artist?" / "+artist:""}${v?`（${v}）`:""}：${line}`);
   }
