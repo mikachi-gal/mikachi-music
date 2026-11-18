@@ -384,6 +384,8 @@ const shuffle=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1])
 
 /* Claudeの中（Claude CodeのArtifact、またはチャットのアーティファクト）ならAI版、それ以外（GitHub Pagesなど）は簡易版 */
 const IN_ARTIFACT=!!window.claude||/(^|\.)claude(usercontent)?\.(ai|com)$/.test(location.hostname);
+/* ランキングはGitHub Pagesで毎日更新。Artifact版からは新しいタブで開く */
+const RANKING=IN_ARTIFACT?"https://mikachi-gal.github.io/mikachi-music/chikem.html":"chikem.html";
 const ytId=u=>{try{return new URL(u).searchParams.get("v")||""}catch(e){return ""}};
 const $=s=>document.querySelector(s);
 const pick=a=>a[Math.floor(Math.random()*a.length)];
@@ -711,7 +713,7 @@ async function run(){
     <p>${esc(rec.why)}</p>
     ${rec.fans?`<div class="fans"><b>♪ コメント欄のみんなの声</b>${esc(rec.fans)}</div>`:""}
     <div class="links"><a href="${esc(rec.url)}" target="_blank" rel="noopener">YouTubeで見る</a>
-    <a class="sub" href="${IN_ARTIFACT?PLAYLIST:"chikem.html"}"${IN_ARTIFACT?' target="_blank" rel="noopener"':""}>${IN_ARTIFACT?"チッケムをもっと見る":"チッケムランキングを見る"}</a></div></div>`;
+    <a class="sub" href="${RANKING}"${IN_ARTIFACT?' target="_blank" rel="noopener"':""}>チッケムランキングを見る</a></div></div>`;
   if(!ai){
     /* AIが使えない場所では、遊ぶ人が自分のClaudeで続きを聞けるようにする */
     const prompt=chatPrompt(songs,rec);
@@ -741,13 +743,13 @@ async function run(){
 /* ---------- 起動 ---------- */
 buildSlots();
 if(!IN_ARTIFACT){
-  $("#formHint").textContent="最初は例の3曲が入ってるよ。書きかえてOK。";
+  $("#formHint").textContent="曲名はうろ覚えでもOK。みかちが探して確かめるよ。";
   $("#footNote").textContent="これは簡易版です。AIは使っていないので、みかちの感想は用意したセリフから選んでいます。";
   $("#modeTag").hidden=false;
-  /* GitHub版では「チッケムひろば」をランキングページにつなぐ */
-  document.querySelectorAll('a[href*="playlist?list="]').forEach(a=>{a.href="chikem.html";a.removeAttribute("target");});
-  $("#bannerSmall").textContent="再生数ランキング（昨日・月間・累計）";
 }
+/* 「チッケムひろば」はランキングページにつなぐ（Artifact版は新しいタブ） */
+document.querySelectorAll('a[href*="playlist?list="]').forEach(a=>{a.href=RANKING;if(!IN_ARTIFACT)a.removeAttribute("target");});
+$("#bannerSmall").textContent="再生数ランキング（昨日・月間・累計）";
 try{
   const d=new Date();
   $("#noticeH").textContent=`--- おしらせ（${d.getMonth()+1}月${d.getDate()}日） ---`;
