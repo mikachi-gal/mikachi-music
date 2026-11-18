@@ -132,7 +132,11 @@ Promise.all([
   D={dates,history:data.history,videos:data.videos||{},ids:(data.playlist&&data.playlist.length)?data.playlist:Object.keys(data.history[dates[dates.length-1]])};
   $("#updated").textContent=`毎日 夜0時すぎに更新されるよ（前回の更新：${(data.updated||dates[dates.length-1]).replace("T"," ").slice(0,16)}）`;
   $("#count").textContent=`「チッケム部門」には ${D.ids.length} 本登録されてるよ`;
-  if(dates.length<2)$("#count").textContent+="　※「昨日」は2日目から出るよ";
+  if(dates.length<2){
+    $("#count").textContent+="　※「昨日」は2日目から出るよ";
+    sortKey="total";
+    document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-pressed",x.dataset.k==="total"));
+  }
   render();
 }).catch(()=>{$("#rows").innerHTML='<tr><td colspan="7" class="empty">データを読み込めなかったよ。時間をおいて開き直してね。</td></tr>';});
 </script>
