@@ -13,6 +13,7 @@ import urllib.request
 
 PLAYLIST_ID = "PLxfDWMKr7Nj5Jz5uYBF5tg-KGKDjhwA-d"
 DATA_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "views.json")
+FANS_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "fans.json")
 API = "https://www.googleapis.com/youtube/v3/"
 JST = datetime.timezone(datetime.timedelta(hours=9))
 
@@ -62,7 +63,14 @@ def main():
     data.setdefault("videos", {})
     data.setdefault("history", {})
 
-    stats = video_stats(playlist_video_ids())
+    # 再生リストの動画に加えて、みかちのおすすめ（fans.json）にある動画も記録する
+    ids = playlist_video_ids()
+    try:
+        with open(FANS_PATH, encoding="utf-8") as f:
+            ids += [v for v in json.load(f) if v not in ids]
+    except FileNotFoundError:
+        pass
+    stats = video_stats(ids)
     today = datetime.datetime.now(JST).date().isoformat()
     data["history"][today] = {vid: s["views"] for vid, s in stats.items()}
     for vid, s in stats.items():
