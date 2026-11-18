@@ -1,23 +1,30 @@
 {
  "history": {
   "2026-11-18": {
-   "-CxB9dittmE": 2440756,
-   "3YA284tXTo0": 128438,
-   "3ZUPrCDEBbA": 142981,
+   "-CxB9dittmE": 2440746,
+   "3YA284tXTo0": 128440,
+   "3ZUPrCDEBbA": 142982,
+   "3hpjZ-nKVDg": 1733224,
+   "4Bv6u7laR3U": 1489839,
    "4w8sykD_IKA": 119624,
+   "8XG6hDbtSio": 192950,
    "Ax-G8MC1rCQ": 212902,
-   "D19xxDRbLXg": 1700085,
-   "ROJXKYMAqcs": 56026,
-   "SV8qEdEcbuM": 69444,
+   "D19xxDRbLXg": 1700090,
+   "MKjJHJvKzXo": 3558501,
+   "ROJXKYMAqcs": 56028,
+   "SV8qEdEcbuM": 69447,
    "YPyuK4GlocE": 111984,
-   "ZArnB1QQwDM": 807326,
+   "ZArnB1QQwDM": 807352,
    "_KYjAANo5Ro": 74953,
+   "a0A9RBEiJ-o": 3513979,
    "cTdhfY1B0NI": 53560,
    "dNZCwfaEI6c": 143601,
-   "fz6J_WhIqXA": 359740,
-   "jQ3yVjUYv68": 66719,
-   "x72W9I75aPs": 565515,
-   "xt32f1QtUYk": 930468
+   "fz6J_WhIqXA": 359741,
+   "ge5wA7wGn7o": 1104541,
+   "jQ3yVjUYv68": 66721,
+   "no3_GCUoT6A": 68889,
+   "x72W9I75aPs": 565517,
+   "xt32f1QtUYk": 930467
   }
  },
  "playlist": [
@@ -37,9 +44,16 @@
   "-CxB9dittmE",
   "D19xxDRbLXg",
   "xt32f1QtUYk",
-  "ZArnB1QQwDM"
+  "ZArnB1QQwDM",
+  "ge5wA7wGn7o",
+  "a0A9RBEiJ-o",
+  "4Bv6u7laR3U",
+  "MKjJHJvKzXo",
+  "3hpjZ-nKVDg",
+  "8XG6hDbtSio",
+  "no3_GCUoT6A"
  ],
- "updated": "2026-11-18T22:27+09:00",
+ "updated": "2026-11-18T22:41+09:00",
  "videos": {
   "-CxB9dittmE": {
    "channel": "PRODUCE 101 JAPAN 新世界",
@@ -56,10 +70,25 @@
    "published": "2025-03-22",
    "title": "[UNFILTERED CAM] ME:I AYANE 'MUSE' 4K | STUDIO CHOOM ORIGINAL"
   },
+  "3hpjZ-nKVDg": {
+   "channel": "ME:I",
+   "published": "2025-11-30",
+   "title": "ME:I (ミーアイ)：MUSE @ ROCK IN JAPAN FESTIVAL 2025"
+  },
+  "4Bv6u7laR3U": {
+   "channel": "全国学校軽音楽部協会",
+   "published": "2023-05-25",
+   "title": "【グランプリ】Ichi Ni Sun／大谷高等学校（演奏曲：Micro Paradiso!／UNISON SQUARE GARDEN）"
+  },
   "4w8sykD_IKA": {
    "channel": "STUDIO CHOOM [스튜디오 춤]",
    "published": "2024-04-21",
    "title": "[UNFILTERED CAM] ME:I AYANE 'Click' 4K | BE ORIGINAL"
+  },
+  "8XG6hDbtSio": {
+   "channel": "ABEMA【アベマ】公式",
+   "published": "2026-04-12",
+   "title": "ME:I AYANE・KEIKOの生歌唱でスタジオがメロメロ⁈本編映像をチラ見せ！ | 『30時間限界突破フェス』 #あざとくて何が悪いの? 特別版 令和の最強あざカワソングSP 1週間無料配信中"
   },
   "Ax-G8MC1rCQ": {
    "channel": "M2",
@@ -70,6 +99,11 @@
    "channel": "PRODUCE 101 JAPAN 新世界",
    "published": "2023-11-13",
    "title": "推しカメラ┊高見文寧（TAKAMI AYANE）✧︎ 宇多田ヒカル ♫ First Love [ポジションバトル｜VOCAL]"
+  },
+  "MKjJHJvKzXo": {
+   "channel": "PRODUCE 101 JAPAN 新世界",
+   "published": "2023-11-30",
+   "title": "ONE TAKE CAM ver.┊ ♫ TOXIC [コンセプトバトル]"
   },
   "ROJXKYMAqcs": {
    "channel": "KBS Kpop",
@@ -96,6 +130,11 @@
    "published": "2025-04-26",
    "title": "[#음중직캠] ME:I TAKAMI AYANE (미아이 타카미 아야네) – MUSE FanCam | 쇼! 음악중심 | MBC250426"
   },
+  "a0A9RBEiJ-o": {
+   "channel": "PRODUCE 101 JAPAN 新世界",
+   "published": "2023-10-05",
+   "title": "#1 ハイライト┊Cool Girls ✧ IZ*ONE ♫ 好きと言わせたい ［レベル分けテスト］"
+  },
   "cTdhfY1B0NI": {
    "channel": "STUDIO CHOOM [스튜디오 춤]",
    "published": "2026-07-23",
@@ -111,10 +150,20 @@
    "published": "2024-04-10",
    "title": "[MPD직캠] 미아이 타카미 아야네 직캠 4K 'Click' (ME:I AYANE FanCam) | ME:I DEBUT SPECIAL"
   },
+  "ge5wA7wGn7o": {
+   "channel": "全国学校軽音楽部協会",
+   "published": "2023-09-19",
+   "title": "【舞鶴市長賞】vintage／大谷高等学校（演奏曲：Runaway Baby／Bruno Mars）"
+  },
   "jQ3yVjUYv68": {
    "channel": "ALL THE K-POP",
    "published": "2025-04-30",
    "title": "[쇼챔직캠 4K] ME:I AYANE(미아이 아야네) - MUSE | Show Champion | EP.553 | 250430"
+  },
+  "no3_GCUoT6A": {
+   "channel": "Mnet K-POP",
+   "published": "2025-06-11",
+   "title": "[#한국의날M콘서트] VIVIZ (비비지) 신비＆엄지 X ME:I 아야네 - 혜성 | Mnet 250611 방송"
   },
   "x72W9I75aPs": {
    "channel": "M2",
