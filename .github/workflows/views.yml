@@ -1,0 +1,30 @@
+name: チッケム再生数の記録
+
+on:
+  schedule:
+    # 毎日 日本時間 0:15 ごろ（UTC 15:15）に実行
+    - cron: "15 15 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: 再生数を取得
+        env:
+          YT_API_KEY: ${{ secrets.YT_API_KEY }}
+        run: python scripts/fetch_views.py
+      - name: 変更があれば保存
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/views.json
+          git diff --cached --quiet || git commit -m "再生数を記録"
+          git push
