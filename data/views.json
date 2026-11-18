@@ -1,5 +1,130 @@
 {
- "history": {},
- "playlist": [],
- "videos": {}
+ "history": {
+  "2026-11-18": {
+   "-CxB9dittmE": 2440756,
+   "3YA284tXTo0": 128438,
+   "3ZUPrCDEBbA": 142981,
+   "4w8sykD_IKA": 119624,
+   "Ax-G8MC1rCQ": 212902,
+   "D19xxDRbLXg": 1700085,
+   "ROJXKYMAqcs": 56026,
+   "SV8qEdEcbuM": 69444,
+   "YPyuK4GlocE": 111984,
+   "ZArnB1QQwDM": 807326,
+   "_KYjAANo5Ro": 74953,
+   "cTdhfY1B0NI": 53560,
+   "dNZCwfaEI6c": 143601,
+   "fz6J_WhIqXA": 359740,
+   "jQ3yVjUYv68": 66719,
+   "x72W9I75aPs": 565515,
+   "xt32f1QtUYk": 930468
+  }
+ },
+ "playlist": [
+  "cTdhfY1B0NI",
+  "jQ3yVjUYv68",
+  "_KYjAANo5Ro",
+  "ROJXKYMAqcs",
+  "YPyuK4GlocE",
+  "SV8qEdEcbuM",
+  "3ZUPrCDEBbA",
+  "3YA284tXTo0",
+  "4w8sykD_IKA",
+  "x72W9I75aPs",
+  "dNZCwfaEI6c",
+  "Ax-G8MC1rCQ",
+  "fz6J_WhIqXA",
+  "-CxB9dittmE",
+  "D19xxDRbLXg",
+  "xt32f1QtUYk",
+  "ZArnB1QQwDM"
+ ],
+ "updated": "2026-11-18T22:27+09:00",
+ "videos": {
+  "-CxB9dittmE": {
+   "channel": "PRODUCE 101 JAPAN 新世界",
+   "published": "2023-11-30",
+   "title": "推しカメラ┊高見文寧（TAKAMI AYANE）♫ TOXIC [コンセプトバトル]"
+  },
+  "3YA284tXTo0": {
+   "channel": "STUDIO CHOOM [스튜디오 춤]",
+   "published": "2024-08-10",
+   "title": "[UNFILTERED CAM] ME:I AYANE 'Hi-Five' 4K | STUDIO CHOOM ORIGINAL"
+  },
+  "3ZUPrCDEBbA": {
+   "channel": "STUDIO CHOOM [스튜디오 춤]",
+   "published": "2025-03-22",
+   "title": "[UNFILTERED CAM] ME:I AYANE 'MUSE' 4K | STUDIO CHOOM ORIGINAL"
+  },
+  "4w8sykD_IKA": {
+   "channel": "STUDIO CHOOM [스튜디오 춤]",
+   "published": "2024-04-21",
+   "title": "[UNFILTERED CAM] ME:I AYANE 'Click' 4K | BE ORIGINAL"
+  },
+  "Ax-G8MC1rCQ": {
+   "channel": "M2",
+   "published": "2024-04-11",
+   "title": "[MPD직캠] 미아이 타카미 아야네 직캠 4K 'Click' (ME:I AYANE FanCam) | @MCOUNTDOWN_2024.4.11"
+  },
+  "D19xxDRbLXg": {
+   "channel": "PRODUCE 101 JAPAN 新世界",
+   "published": "2023-11-13",
+   "title": "推しカメラ┊高見文寧（TAKAMI AYANE）✧︎ 宇多田ヒカル ♫ First Love [ポジションバトル｜VOCAL]"
+  },
+  "ROJXKYMAqcs": {
+   "channel": "KBS Kpop",
+   "published": "2025-04-25",
+   "title": "[K-Fancam] 미아이 아야네 직캠 'MUSE'(ME:I AYANE Fancam) @뮤직뱅크(Music Bank) 250425"
+  },
+  "SV8qEdEcbuM": {
+   "channel": "M2",
+   "published": "2025-04-24",
+   "title": "[MPD직캠] 미아이 아야네 직캠 4K 'MUSE ' (ME:I AYANE FanCam) | @MCOUNTDOWN_2025.4.24"
+  },
+  "YPyuK4GlocE": {
+   "channel": "M2",
+   "published": "2025-04-27",
+   "title": "[입덕직캠] 미아이 아야네 직캠 4K 'MUSE ' (ME:I AYANE FanCam) | @MCOUNTDOWN_2025.4.24"
+  },
+  "ZArnB1QQwDM": {
+   "channel": "PRODUCE 101 JAPAN 新世界",
+   "published": "2023-09-03",
+   "title": "高見文寧（TAKAMI AYANE）✧︎ LEAP HIGH! ～明日へ、めいっぱい～ [推しカメラ] PRODUCE 101 JAPAN THE GIRLS"
+  },
+  "_KYjAANo5Ro": {
+   "channel": "MBCkpop",
+   "published": "2025-04-26",
+   "title": "[#음중직캠] ME:I TAKAMI AYANE (미아이 타카미 아야네) – MUSE FanCam | 쇼! 음악중심 | MBC250426"
+  },
+  "cTdhfY1B0NI": {
+   "channel": "STUDIO CHOOM [스튜디오 춤]",
+   "published": "2026-07-23",
+   "title": "[UNFILTERED CAM] ME:I AYANE 'Flower Road' 4K | STUDIO CHOOM ORIGINAL"
+  },
+  "dNZCwfaEI6c": {
+   "channel": "M2",
+   "published": "2024-04-17",
+   "title": "[MPD직캠] 미아이 타카미 아야네 직캠 4K 'Sugar Bomb' (ME:I AYANE FanCam) | ME:I DEBUT SPECIAL"
+  },
+  "fz6J_WhIqXA": {
+   "channel": "M2",
+   "published": "2024-04-10",
+   "title": "[MPD직캠] 미아이 타카미 아야네 직캠 4K 'Click' (ME:I AYANE FanCam) | ME:I DEBUT SPECIAL"
+  },
+  "jQ3yVjUYv68": {
+   "channel": "ALL THE K-POP",
+   "published": "2025-04-30",
+   "title": "[쇼챔직캠 4K] ME:I AYANE(미아이 아야네) - MUSE | Show Champion | EP.553 | 250430"
+  },
+  "x72W9I75aPs": {
+   "channel": "M2",
+   "published": "2024-04-18",
+   "title": "[입덕직캠] 미아이 타카미 아야네 직캠 4K 'Sugar Bomb' (ME:I AYANE FanCam) | ME:I DEBUT SPECIAL"
+  },
+  "xt32f1QtUYk": {
+   "channel": "PRODUCE 101 JAPAN 新世界",
+   "published": "2023-10-27",
+   "title": "推しカメラ┊高見文寧（TAKAMI AYANE）✧︎ 乃木坂46 ♫ 制服のマネキン ✧ 2組 [グループバトル]"
+  }
+ }
 }
