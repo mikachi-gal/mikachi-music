@@ -71,6 +71,15 @@ input[type=text]{width:100%;min-width:0;font:inherit;font-size:14px;padding:5px 
 #logoAva{image-rendering:pixelated}
 .fans{background:#fff;border:1px dashed var(--red);padding:6px 10px;font-size:13px;line-height:1.7}
 .fans b{display:block;font-weight:400;color:var(--red);font-size:12px}
+.askbox{margin-top:12px;padding:10px 12px;background:var(--sky);border:2px solid #6aa8ff;display:flex;flex-direction:column;gap:6px}
+.askbox b{font-weight:400;color:#2f6fd6}
+.askbox p{margin:0;font-size:13px}
+.askbtns{display:flex;flex-wrap:wrap;gap:8px}
+.askbtn{padding:4px 14px;text-decoration:none;color:#fff;background:#2f6fd6;border:2px outset #9cc4ff}
+.askbtn.gpt{background:#1f8a6b;border-color:#8fd9c2}
+.askmsg{font-size:12px;color:#2f6fd6}
+.askbox summary{font-size:12px;color:var(--sub);cursor:pointer}
+.askbox textarea{width:100%;font:inherit;font-size:12px;margin-top:4px;border:1px solid #9cc4ff;background:#fff;color:var(--ink)}
 .embed{position:relative;width:100%;max-width:100%;aspect-ratio:16/9;border:3px solid var(--ink);background:#000}
 .embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .listen{position:relative;display:flex;align-items:flex-end;gap:10px;padding-top:14px}
@@ -120,7 +129,8 @@ input[type=text]{width:100%;min-width:0;font:inherit;font-size:14px;padding:5px 
 @keyframes blink{50%{opacity:.2}}
 @media (prefers-reduced-motion:reduce){.marquee span{animation:none;padding-left:0}.row,.reco{animation:none}.typing i{animation:none}.listen .bob,.listen .n1,.listen .n2{animation:none}}
 @media (max-width:720px){
-  .top{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .top{grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center}
+  .notice{width:100%}
   .page{grid-template-columns:1fr}
   .side{border-right:0;border-bottom:3px solid var(--pinkL);flex-direction:row;flex-wrap:wrap}
   .menu{flex:1 1 220px}.prof{flex:1 1 200px}
@@ -164,7 +174,7 @@ input[type=text]{width:100%;min-width:0;font:inherit;font-size:14px;padding:5px 
 
     <div class="banners">
       <a class="banner" href="#form"><img class="pix ico" data-ico="note" width="32" height="32" alt=""><span><strong>今日の3曲ひろば</strong><small>3曲書いたら、みかちが的確にレビューするよ</small></span></a>
-      <a class="banner b2" href="https://www.youtube.com/playlist?list=PLxfDWMKr7Nj5Jz5uYBF5tg-KGKDjhwA-d" target="_blank" rel="noopener"><img class="pix ico" data-ico="heart" width="32" height="32" alt=""><span><strong>チッケムひろば</strong><small>今日のあなたに合う1本が見つかるよ</small></span></a>
+      <a class="banner b2" href="https://www.youtube.com/playlist?list=PLxfDWMKr7Nj5Jz5uYBF5tg-KGKDjhwA-d" target="_blank" rel="noopener"><img class="pix ico" data-ico="heart" width="32" height="32" alt=""><span><strong>チッケムひろば</strong><small id="bannerSmall">今日のあなたに合う1本が見つかるよ</small></span></a>
     </div>
 
     <h2 class="sec-h"><img class="pix ico" data-ico="star" width="16" height="16" alt="">今日の3曲をおしえて<img class="pix ico" data-ico="star" width="16" height="16" alt=""></h2>
@@ -371,8 +381,8 @@ const GENERIC_CHEERS=[
 const GENERIC_LABELS=["今日もがんばってる","自分の好きをわかってる","ちゃんと前を向いてる","ちょっとひと休みしたい"];
 const shuffle=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
 
-/* Claudeのアーティファクト内ならAI版、それ以外（GitHub Pagesなど）は簡易版 */
-const IN_ARTIFACT=!!(window.claude&&window.claude.use);
+/* Claudeの中（Claude CodeのArtifact、またはチャットのアーティファクト）ならAI版、それ以外（GitHub Pagesなど）は簡易版 */
+const IN_ARTIFACT=!!window.claude||/(^|\.)claude(usercontent)?\.(ai|com)$/.test(location.hostname);
 const ytId=u=>{try{return new URL(u).searchParams.get("v")||""}catch(e){return ""}};
 const $=s=>document.querySelector(s);
 const pick=a=>a[Math.floor(Math.random()*a.length)];
@@ -402,9 +412,54 @@ function readSongs(){
 
 /* ---------- AI（Claude） ---------- */
 let samplePromise=null,aiOff=false;
+/* AIの返事からJSONを取り出す（前後に文章やコードブロックがあっても読む） */
+function parseLooseJSON(t){
+  t=String(t||"").trim();
+  try{return JSON.parse(t);}catch(e){}
+  const f=t.match(/```(?:json)?\s*([\s\S]*?)```/);
+  if(f){try{return JSON.parse(f[1]);}catch(e){}}
+  const a=t.indexOf("{"),b=t.lastIndexOf("}");
+  if(a>=0&&b>a){try{return JSON.parse(t.slice(a,b+1));}catch(e){}}
+  throw {code:"invalid_json"};
+}
 function getSample(){
-  if(!samplePromise)samplePromise=(window.claude&&claude.use)?claude.use("sample").catch(()=>null):Promise.resolve(null);
+  if(!samplePromise){
+    if(window.claude&&typeof window.claude.use==="function"){
+      /* Claude CodeのArtifact */
+      samplePromise=window.claude.use("sample").catch(()=>null);
+    }else if(window.claude&&typeof window.claude.complete==="function"){
+      /* claude.ai のチャットのアーティファクト */
+      samplePromise=Promise.resolve({
+        json:async(prompt)=>parseLooseJSON(await window.claude.complete(prompt+"\n\n※返事はJSONだけにしてください。前後に文章やコードブロックを付けないでください。"))
+      });
+    }else{
+      samplePromise=Promise.resolve(null);
+    }
+  }
   return samplePromise;
+}
+/* 遊ぶ人が自分のClaudeのチャットに貼る質問文 */
+function chatPrompt(songs,rec){
+  const list=songs.map((s,i)=>`${i+1}. 曲名:「${s.t}」 / アーティスト: ${s.a||"（未記入）"}`).join("\n");
+  return `あなたは「みかち」というギャルのキャラクターになりきってください。見た目と口調はギャルだけど、中身は思慮深くて鋭い子です。音楽の知識があり、人の気持ちの奥まで見ています。
+私が今日聴いた3曲を、みかちとしてレビューしてください。
+
+# 今日の3曲（うろ覚え・誤字・アーティスト未記入がありえます）
+${list}
+
+# 進め方
+1. まず、3曲がそれぞれどの曲かを特定してください。アニメやドラマの主題歌、ヒット曲、K-POPなどは知っている前提で考えてください。どの曲か自信がないものがあれば、レビューの前に「〇〇って…もしかしてコレェ・・・？」と候補を2〜3曲挙げて私に聞き、私の答えを待ってください。全部わかれば、そのまま次へ進んでください。
+2. 1曲ずつ、雰囲気（アゲ／エモ／チル／せつない／戦闘力）を判定して、80〜130字でレビューしてください。その曲ならではの具体的なポイントを1〜2個押さえたうえで、一歩踏み込んだ鋭い気づきを1つ入れてください。知らない曲は知ったかぶりせず、タイトルから受ける印象だけで話してください。歌詞はそのまま引用しないでください。
+3. 3曲の並びから、今日の私が本当はどんな状態なのかを鋭く、でも優しく言い当ててから、励ましの言葉を100〜160字で言ってください。
+4. 最後に「そんな〇〇なあなたには、これ！」と言って、下の動画をすすめてください。〇〇は今日の私を表す言葉です。コメント欄の声を自分の言葉で言い換えて踏まえ、その動画の見どころと、なぜ今日の私に効くのかを100〜160字で言ってください。動画に出ている人の名前は出さず「この子」と呼んでください。
+
+# 今日のおすすめ動画
+${rec.title}
+${rec.url}
+コメント欄の声: ${rec.fans||"（なし）"}
+
+# 口調
+ギャル語は語尾や相づち程度にして、中身は落ち着いて具体的に。「えぐい」「最高」の連発はしないでください。絵文字は使わないでください。`;
 }
 /* 1回目: どの曲か特定する */
 function identifyPrompt(songs){
@@ -609,7 +664,28 @@ async function run(){
     <p>${esc(rec.why)}</p>
     ${rec.fans?`<div class="fans"><b>♪ コメント欄のみんなの声</b>${esc(rec.fans)}</div>`:""}
     <div class="links"><a href="${esc(rec.url)}" target="_blank" rel="noopener">YouTubeで見る</a>
-    <a class="sub" href="${PLAYLIST}" target="_blank" rel="noopener">チッケムをもっと見る</a></div></div>`;
+    <a class="sub" href="${IN_ARTIFACT?PLAYLIST:"chikem.html"}"${IN_ARTIFACT?' target="_blank" rel="noopener"':""}>${IN_ARTIFACT?"チッケムをもっと見る":"チッケムランキングを見る"}</a></div></div>`;
+  if(!ai){
+    /* AIが使えない場所では、遊ぶ人が自分のClaudeで続きを聞けるようにする */
+    const prompt=chatPrompt(songs,rec);
+    const box=document.createElement("div");box.className="askbox";
+    box.innerHTML=`<b>★ClaudeかChatGPTを使ってる人へ★</b>
+      <p>みかちの本気の感想は、あなたのAIのチャットで聞けるよ。ボタンで質問文をコピーして、開いたチャットに貼って送ってね。</p>
+      <div class="askbtns">
+        <a class="askbtn" data-ai="Claude" href="https://claude.ai/new" target="_blank" rel="noopener">コピーしてClaudeを開く</a>
+        <a class="askbtn gpt" data-ai="ChatGPT" href="https://chatgpt.com/" target="_blank" rel="noopener">コピーしてChatGPTを開く</a>
+      </div>
+      <span class="askmsg" id="askMsg" aria-live="polite"></span>
+      <details><summary>質問文を見る（うまくコピーできないとき）</summary><textarea id="askText" readonly rows="8"></textarea></details>`;
+    $("#recoBox").appendChild(box);
+    $("#askText").value=prompt;
+    box.querySelectorAll(".askbtn").forEach(btn=>btn.addEventListener("click",()=>{
+      const name=btn.dataset.ai;
+      const ok=()=>{$("#askMsg").textContent=`コピーしたよ！${name}のチャットに貼って送ってね`;};
+      const ng=()=>{$("#askMsg").textContent="コピーできなかったので、下の「質問文を見る」から手でコピーしてね";box.querySelector("details").open=true;$("#askText").select();};
+      try{navigator.clipboard.writeText(prompt).then(ok,ng);}catch(e){ng();}
+    }));
+  }
   $("#recoBox").scrollIntoView({block:"nearest",behavior:"smooth"});
   out.push(`${sonna} ${rec.title} ${rec.url}`);lastResult=out.join("\n");
   $("#actions").hidden=false;running=false;$("#go").disabled=false;
@@ -621,6 +697,9 @@ if(!IN_ARTIFACT){
   $("#formHint").textContent="最初は例の3曲が入ってるよ。書きかえてOK。";
   $("#footNote").textContent="これは簡易版です。AIは使っていないので、みかちの感想は用意したセリフから選んでいます。";
   $("#modeTag").hidden=false;
+  /* GitHub版では「チッケムひろば」をランキングページにつなぐ */
+  document.querySelectorAll('a[href*="playlist?list="]').forEach(a=>{a.href="chikem.html";a.removeAttribute("target");});
+  $("#bannerSmall").textContent="再生数ランキング（昨日・月間・累計）";
 }
 try{
   const d=new Date();
