@@ -615,6 +615,32 @@ function showListening(label){
 }
 /* AIがない場所用：iTunesの曲検索で候補を探す（無料・キー不要）。通信できなければ null */
 const normT=x=>String(x||"").toLowerCase().normalize("NFKC").replace(/[ぁ-ゖ]/g,c=>String.fromCharCode(c.charCodeAt(0)+0x60)).replace(/[\s　・'"’!！?？.,、。〜~ー-]/g,"");
+/* カタカナで打った英語の曲名を当てるための「読み」くらべ。
+   ロイヤルエナジー → roiyaruenaji、Royal Energy → royalenergy にして、子音の並びの近さで比べる */
+const KANA_R=(()=>{const t="ア a イ i ウ u エ e オ o カ ka キ ki ク ku ケ ke コ ko ガ ga ギ gi グ gu ゲ ge ゴ go サ sa シ shi ス su セ se ソ so ザ za ジ ji ズ zu ゼ ze ゾ zo タ ta チ chi ツ tsu テ te ト to ダ da ヂ ji ヅ zu デ de ド do ナ na ニ ni ヌ nu ネ ne ノ no ハ ha ヒ hi フ fu ヘ he ホ ho バ ba ビ bi ブ bu ベ be ボ bo パ pa ピ pi プ pu ペ pe ポ po マ ma ミ mi ム mu メ me モ mo ヤ ya ユ yu ヨ yo ラ ra リ ri ル ru レ re ロ ro ワ wa ヲ wo ン n ヴ bu".split(" ");const m={};for(let k=0;k<t.length;k+=2)m[t[k]]=t[k+1];return m;})();
+function toRomaji(x){
+  x=String(x||"").normalize("NFKC").replace(/[ぁ-ゖ]/g,c=>String.fromCharCode(c.charCodeAt(0)+0x60));
+  let o="";
+  for(const c of x){
+    if(KANA_R[c]){o+=KANA_R[c];continue;}
+    if("ャュョ".includes(c)){o=o.replace(/i$/,"")+{"ャ":"ya","ュ":"yu","ョ":"yo"}[c];continue;}
+    if("ァィゥェォ".includes(c)){o=o.replace(/[aiueo]$/,"")+{"ァ":"a","ィ":"i","ゥ":"u","ェ":"e","ォ":"o"}[c];continue;}
+    if(c==="ッ"||c==="ー")continue;
+    o+=c.toLowerCase();
+  }
+  return o;
+}
+const readKey=x=>toRomaji(x).replace(/[^a-z]/g,"").replace(/ph/g,"f").replace(/ck/g,"k").replace(/(sh|ch|th|ts)/g,"s")
+  .replace(/[cq]/g,"k").replace(/x/g,"ks").replace(/([aeiou])r(?=[^aeiouy]|$)/g,"$1").replace(/l/g,"r").replace(/v/g,"b").replace(/j/g,"g").replace(/z/g,"s");
+const consKey=x=>readKey(x).replace(/[aeiouyh]/g,"").replace(/(.)\1+/g,"$1");
+function editSim(a,b){
+  if(!a||!b)return 0;
+  const d=Array.from({length:a.length+1},(_,i)=>[i]);for(let j=1;j<=b.length;j++)d[0][j]=j;
+  for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
+  return 1-d[a.length][b.length]/Math.max(a.length,b.length);
+}
+/* 読みの近さ（0〜1）。子音の並びを重く、母音こみの並びを軽く見る */
+const readSim=(u,v)=>{const cu=consKey(u),cv=consKey(v);if(cu.length<2||cv.length<2)return 0;return editSim(cu,cv)*0.7+editSim(readKey(u),readKey(v))*0.3;};
 async function searchSongs(s){
   const once=async term=>{
     const ctl=new AbortController();const tm=setTimeout(()=>ctl.abort(),7000);
@@ -637,23 +663,43 @@ async function searchSongs(s){
   const core=t=>normT(String(t).replace(/[(（\[【][^)）\]】]*[)）\]】]/g,""));
   const sameTitle=(u,v)=>{u=core(u);v=core(v);if(!u||!v)return false;if(u===v)return true;
     const [a,b]=u.length<v.length?[u,v]:[v,u];return b.includes(a)&&a.length>=b.length*0.6;};
+  const cleanTitle=t=>String(t).replace(/\s*[(（\[][^)）\]]*(ver|version|remix|mix|remaster|edit|instrumental|inst|tv size|short|カラオケ|off vocal|live|ライブ|リミックス|ミックス|リマスター|インスト|バージョン)[^)）\]]*[)）\]]/ig,"").replace(/\s+-\s+.*$/,"").trim();
   /* オルゴール・ピアノ・BGMなどのカバーは外す */
   const COVER=/オルゴール|ピアノ|piano|bgm|lab|カバー|cover|カラオケ|karaoke|instrumental|インストゥルメンタル|off vocal|α波|relax|ヒーリング/i;
   const seen=new Set(),items=[];
   for(const x of [...solo,...(both||[])]){
     if(!x.trackName)continue;
     if(COVER.test(x.trackName)||COVER.test(x.artistName||""))continue;
-    const title=String(x.trackName).replace(/\s*[(（\[][^)）\]]*(ver|version|remix|mix|remaster|edit|instrumental|inst|tv size|short|カラオケ|off vocal|live|ライブ|リミックス|ミックス|リマスター|インスト|バージョン)[^)）\]]*[)）\]]/ig,"").replace(/\s+-\s+.*$/,"").trim();
+    const title=cleanTitle(x.trackName);
     const artist=String(x.artistName||"");
     const key=normT(title)+"|"+normT(artist);
     if(seen.has(key))continue;seen.add(key);
     items.push({title,artist,tm:sameTitle(title,s.t),am:!!s.a&&has(artist,s.a)});
   }
-  /* 曲名が合う曲だけにする。1つもなければ、アーティストが合う曲（アーティスト未記入なら全部） */
+  /* 曲名が合う曲だけにする */
   let out=items.filter(x=>x.tm);
-  if(!out.length)out=s.a?items.filter(x=>x.am):items;
-  /* 曲名もアーティストも合う曲 → みかちの推し ME:I → 有名な順 */
-  out.sort((a,b)=>(b.tm&&b.am)-(a.tm&&a.am)||isMEI(b.artist)-isMEI(a.artist));
+  /* アーティストを入れたのに、曲名もアーティストも合う曲がないときは、その人の曲を「読み」で探して前に出す
+     （ロイヤルエナジー → Royal Energy、クリック → Click） */
+  if(s.a&&!out.some(x=>x.am)){
+    const get=async u=>{const ctl=new AbortController();const tm=setTimeout(()=>ctl.abort(),7000);
+      try{const r=await fetch(u,{signal:ctl.signal});return r.ok?((await r.json()).results||[]):[];}catch(e){return [];}finally{clearTimeout(tm);}};
+    let id=([...solo,...(both||[])].find(x=>x.artistId&&has(x.artistName,s.a))||{}).artistId;
+    if(!id)id=((await get("https://itunes.apple.com/search?country=JP&lang=ja_jp&entity=musicArtist&limit=5&term="+encodeURIComponent(s.a))).find(x=>x.artistId&&has(x.artistName,s.a))||{}).artistId;
+    const pool=items.filter(x=>x.am);
+    if(id){
+      for(const x of await get("https://itunes.apple.com/lookup?country=JP&lang=ja_jp&entity=song&limit=200&id="+id)){
+        if(x.wrapperType!=="track"||!x.trackName||COVER.test(x.trackName))continue;
+        const title=cleanTitle(x.trackName),artist=String(x.artistName||""),key=normT(title)+"|"+normT(artist);
+        if(seen.has(key))continue;seen.add(key);pool.push({title,artist,tm:false,am:true});
+      }
+    }
+    const read=pool.map(x=>({...x,sc:readSim(s.t,x.title)})).filter(x=>x.sc>=0.6).sort((a,b)=>b.sc-a.sc);
+    out=[...read,...out];
+  }
+  /* アーティスト未記入で曲名が合わないときは、検索結果をそのまま */
+  if(!out.length&&!s.a)out=items;
+  /* 曲名もアーティストも合う曲 → アーティストが合う曲 → みかちの推し ME:I → 有名な順 */
+  out.sort((a,b)=>(b.tm&&b.am)-(a.tm&&a.am)||b.am-a.am||isMEI(b.artist)-isMEI(a.artist));
   return out.slice(0,6).map(({title,artist})=>({title,artist}));
 }
 /* ME:I かどうか（表記ゆれも見る） */
