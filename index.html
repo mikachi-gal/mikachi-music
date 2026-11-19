@@ -1,5 +1,5 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
-<title>ギャルの今日の3曲</title>
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="description" content="今日聴いた3曲を教えると、ギャルのみかちが感想をくれて、今日のあなたにぴったりのおすすめ動画も教えてくれるよ。"><meta property="og:type" content="website"><meta property="og:site_name" content="みかちのミュージックひろば"><meta property="og:title" content="みかちのミュージックひろば"><meta property="og:description" content="今日聴いた3曲を教えると、ギャルのみかちが感想をくれて、今日のあなたにぴったりのおすすめ動画も教えてくれるよ。"><meta property="og:url" content="https://mikachi-gal.github.io/mikachi-music/"><meta property="og:image" content="https://mikachi-gal.github.io/mikachi-music/ogp.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="icon" href="favicon.ico" sizes="any"><link rel="icon" type="image/png" href="favicon-32.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
+<title>みかちのミュージックひろば</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap">
 <style>
@@ -50,6 +50,8 @@ main{min-width:0;padding:14px 18px 24px;display:flex;flex-direction:column;gap:1
 .banner.b2{border-color:#6aa8ff;background:linear-gradient(#fff,var(--sky))}
 .banner strong{display:block;font-weight:400;font-size:15px;color:var(--pink)}
 .banner.b2 strong{color:#2f6fd6}
+.banner.b3{display:none;border-color:#f0a020;background:linear-gradient(#fff,#fff7c2)}
+.banner.b3 strong{color:#d07a00}
 .banner small{display:block;font-size:11px;color:var(--sub);line-height:1.4}
 
 .sec-h{display:flex;align-items:center;justify-content:center;gap:8px;margin:0;font-weight:400;font-size:16px;color:var(--pink);letter-spacing:.1em;text-wrap:balance}
@@ -57,7 +59,7 @@ main{min-width:0;padding:14px 18px 24px;display:flex;flex-direction:column;gap:1
 .slots{display:flex;flex-direction:column;gap:10px}
 .slot{display:grid;grid-template-columns:30px 1fr 1fr;gap:6px;align-items:center}
 .num{width:28px;height:28px;display:grid;place-items:center;background:var(--pink);color:#fff;font-size:15px}
-input[type=text]{width:100%;min-width:0;font:inherit;font-size:14px;padding:5px 8px;border:2px inset #ffc2dc;background:#fff;color:var(--ink);border-radius:0}
+input[type=text]{width:100%;min-width:0;font:inherit;font-size:16px;padding:5px 8px;border:2px inset #ffc2dc;background:#fff;color:var(--ink);border-radius:0}
 .hint{font-size:12px;color:var(--sub);margin:8px 0 0}
 .err{font-size:13px;color:var(--red);margin:8px 0 0}
 .go{align-self:center;font:inherit;font-size:17px;padding:8px 26px;cursor:pointer;color:#fff;background:linear-gradient(#ff8cc0,var(--pink));border:3px outset #ffb3d6;letter-spacing:.1em}
@@ -124,10 +126,17 @@ input[type=text]{width:100%;min-width:0;font:inherit;font-size:14px;padding:5px 
 .actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
 .small{font:inherit;font-size:13px;padding:4px 14px;cursor:pointer;background:#fff;color:var(--pink);border:2px outset var(--pinkL)}
 .foot{font-size:11px;color:var(--sub);text-align:center;margin:8px 0 0}
+.xshare{text-decoration:none;display:inline-block;background:#111;color:#fff;border:2px outset #666}
 
 @keyframes pop{from{transform:translateY(6px);opacity:.3}to{transform:none;opacity:1}}
 @keyframes blink{50%{opacity:.2}}
 @media (prefers-reduced-motion:reduce){.marquee span{animation:none;padding-left:0}.row,.reco{animation:none}.typing i{animation:none}.listen .bob,.listen .n1,.listen .n2{animation:none}}
+/* 画面500px以下ではバナーを縦1列にし、メニューとプロフを消して前略プロフのバナーを出す */
+@media (max-width:500px){
+  .page .side{display:none}
+  .banners{grid-template-columns:1fr}
+  .banner.b3{display:flex}
+}
 @media (max-width:720px){
   .top{grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center}
   .notice{width:100%}
@@ -164,7 +173,7 @@ input[type=text]{width:100%;min-width:0;font:inherit;font-size:14px;padding:5px 
         <dt>なまえ</dt><dd>みかち</dd>
         <dt>しごと</dt><dd>ギャル兼音楽オタク</dd>
         <dt>とくぎ</dt><dd>イントロ3秒で曲当て</dd>
-        <dt>推し</dt><dd>ME:I 文寧ちゃん</dd>
+        <dt>推し</dt><dd>ME:I 高見文寧ちゃん</dd>
       </dl>
       <a class="profmore" href="prof.html">▶前略プロフを見る</a>
     </div>
@@ -176,13 +185,14 @@ input[type=text]{width:100%;min-width:0;font:inherit;font-size:14px;padding:5px 
     <div class="banners">
       <a class="banner" href="#form"><img class="pix ico" data-ico="note" width="32" height="32" alt=""><span><strong>今日の3曲ひろば</strong><small>3曲書いたら、みかちが的確にレビューするよ</small></span></a>
       <a class="banner b2" href="https://www.youtube.com/playlist?list=PLxfDWMKr7Nj5Jz5uYBF5tg-KGKDjhwA-d" target="_blank" rel="noopener"><img class="pix ico" data-ico="heart" width="32" height="32" alt=""><span><strong>チッケムひろば</strong><small id="bannerSmall">今日のあなたに合う1本が見つかるよ</small></span></a>
+      <a class="banner b3" href="prof.html"><img class="pix ico" data-ico="star" width="32" height="32" alt=""><span><strong>みかちの前略プロフ</strong><small>足あと残すの必須だかんね！</small></span></a>
     </div>
 
     <h2 class="sec-h"><img class="pix ico" data-ico="star" width="16" height="16" alt="">今日の3曲をおしえて<img class="pix ico" data-ico="star" width="16" height="16" alt=""></h2>
     <p class="counter" id="modeTag" hidden>★かんたん版★ AIなしで遊べるバージョンだよ</p>
     <form class="box" id="form" novalidate>
       <div class="slots" id="slots"></div>
-      <p class="hint" id="formHint">最初は例の3曲が入ってるよ。アーティストがわからなければ空でOK。うろ覚えの曲名でも、みかちが当ててみる。</p>
+      <p class="hint" id="formHint">今日聴いた3曲を入れてね。アーティストがわからなければ空でOK。うろ覚えの曲名でも、みかちが当ててみる。</p>
       <p class="err" id="err" hidden></p>
       <p class="hint" id="aiNote" hidden>いまAIが使えないので、かんたんモードで返すね。</p>
     </form>
@@ -194,6 +204,7 @@ input[type=text]{width:100%;min-width:0;font:inherit;font-size:14px;padding:5px 
     <div class="actions" id="actions" hidden>
       <button class="small" id="again" type="button">別の感想をもらう</button>
       <button class="small" id="copy" type="button">結果をコピー</button>
+      <a class="small xshare" id="xshare" href="#" target="_blank" rel="noopener">Xでシェア</a>
     </div>
 
     <p class="foot" id="footNote">みかちは架空のキャラで、感想はAI（Claude）が曲の知識から考えています。実際に音源を聴いてはいません。AIを使うときは、見ている人のClaude利用枠を使います。おすすめ動画はYouTubeで開きます。</p>
@@ -370,8 +381,8 @@ const GENERIC=[
   "{t}を今日の1曲に入れるの、自分の気分ちゃんとわかってる人の選び方じゃん。そういうとこ、まじで信用できる。",
   "{t}ってさ、聴く日によって刺さるとこ変わる曲じゃね？今日はどこが響いたのか、ちょっと気になるんだけど。",
   "{t}選んだってことは、今日のあなたの中に、この曲と同じ温度の何かがあったっしょ。わかる、そういう日あるし。",
-  "{t}、流しっぱなしより、ちゃんと聴きたくなるタイプの曲じゃん？そういう時間作れてるの、えらすぎ。",
-  "{t}を3曲の中に置くの、並びのバランス感覚よくない？気分の真ん中ちゃんと押さえてて、てかセンスあるし。",
+  "{t}、流しっぱなしより、ちゃんと聴きたくなるタイプの曲じゃん？オールでリピっても飽きないやつ。そういう時間作れてるの、えらすぎ。",
+  "{t}を3曲の中に置くの、並びのバランス感覚よくない？てかそれってチョ→ブクロじゃね！？…うん、気分の真ん中ちゃんと押さえてて、センスダンチだし。",
   "{t}みたいな曲選ぶ日ってさ、ほんとは自分を励ましたい日だったりするじゃん。それな、って思った人いるっしょ。"
 ];
 const GENERIC_CHEERS=[
@@ -379,6 +390,29 @@ const GENERIC_CHEERS=[
   "選んだ曲って、その日の自分のいちばん正直なメモじゃね？今日のメモ、悪くないじゃん。明日もまた聴かせてよ。",
   "曲で気持ち整えられる人って強いし。今日もちゃんと自分の機嫌とれてるじゃん。ウケるくらい安定してる、そのままでいこ。"
 ];
+const SHARE_LINES=[
+  "この3曲並べるセンス、まじ天才じゃん。今日のあなた、ちゃんと最強だし！",
+  "てかこの3曲、チョ→ブクロじゃね！？意味わかんないけど、それくらいアゲってこと！",
+  "選曲センスがダンチすぎて、みかちもラブったんだけど。VIVA自分でいこ！",
+  "この並び、チェケラッチョって言いたくなるやつ。今日のあなた激カワ確定！",
+  "選曲の流れきれいすぎじゃね？聴いてるだけでこっちまでアゲなんだけど！",
+  "この3曲で1日のりきれるの強すぎっしょ。みかち的に100点つけとく！",
+  "3曲とも今日のあなたにぴったりすぎてウケる。明日もこの調子でいこ！"
+];
+const SITE_URL="https://mikachi-gal.github.io/mikachi-music/";
+/* Xの文字数：半角は1、全角は2で数える。URLは23 */
+const xLen=t=>[...t].reduce((n,c)=>n+(c.charCodeAt(0)<0x2000?1:2),0);
+const cut=(t,n)=>{t=String(t||"");let o="";for(const c of t){if(xLen(o+c)>n-2)return o+"…";o+=c;}return o;};
+function shareText(songs,line){
+  const make=(tl,al,ll)=>["今日のアゲ曲",
+    ...songs.map((s,i)=>{const t=s.known?s.title:s.t,a=s.known?s.artist:s.a;return `${i+1}. 「${cut(t,tl)}」${al&&a?" / "+cut(a,al):""}`;}),
+    `みかち「${cut(line,ll)}」`,"#みかちのミュージックひろば"].join("\n");
+  /* 長いときは、アーティスト名は残して、曲名・アーティスト名・ひとことを少しずつ短くする */
+  for(const [tl,al,ll] of [[60,30,100],[36,24,90],[28,18,80],[22,14,64],[16,12,52],[12,10,44],[12,0,44]]){
+    const t=make(tl,al,ll);if(xLen(t)+24<=280)return t;
+  }
+  return make(10,0,40);
+}
 const GENERIC_LABELS=["今日もがんばってる","自分の好きをわかってる","ちゃんと前を向いてる","ちょっとひと休みしたい"];
 const shuffle=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
 
@@ -464,7 +498,9 @@ ${rec.url}
 コメント欄の声: ${rec.fans||"（なし）"}
 
 # 口調
-ギャルの話し言葉で、敬語は使わない。語尾は「〜じゃね？」「〜じゃん？」「〜っしょ」「〜だし」「〜くない？」、相づちは「わかる」「ウケる」「まじ」「それな」「てか」などを自然にまぜる。1つのコメントに2〜3個までにして、同じ言い回しを続けない。「ウケる」は面白いことや意外なことにだけ使い、せつない話には使わない。口調はギャルでも、言っている中身は落ち着いていて思慮深く具体的に。「えぐい」「やばい」「最高」だけで済ませない。絵文字は使わない。`;
+ギャルの話し言葉で、敬語は使わない。語尾は「〜じゃね？」「〜じゃん？」「〜っしょ」「〜だし」「〜くない？」、相づちは「わかる」「ウケる」「まじ」「それな」「てか」などを自然にまぜる。1つのコメントに2〜3個までにして、同じ言い回しを続けない。「ウケる」は面白いことや意外なことにだけ使い、せつない話には使わない。口調はギャルでも、言っている中身は落ち着いていて思慮深く具体的に。「えぐい」「やばい」「最高」だけで済ませない。絵文字は使わない。
+平成ギャル語をスパイスに入れる。3曲のコメントのうち1つか2つに、次の言葉から1語ずつ使う：ダンチ（段違い）、激カワ、チョッパズ（超恥ずかしい）、ガン寝、オール（朝まで起きてる）、ブクロ（池袋）、ノ→プロ（問題なし）、ゼロイミ（意味ゼロ）、VIVA自分、チェケラッチョ、ラブった（恋に落ちた）、チョヅく（調子に乗る）、アピる、レコ屋、恋バナ、チョ→（超）。
+そのうち1回は「てかそれってチョ→ブクロじゃね！？」のように、意味はよくわからないけどノリで言っちゃう一言にしてよい。その一言のあとは、すぐ落ち着いた思慮深い中身に戻る。毎回同じ言葉を使わない。`;
 }
 /* 1回目: どの曲か特定する */
 function identifyPrompt(songs){
@@ -500,7 +536,7 @@ async function identify(songs){
 /* 2回目: 確定した曲でレビューする */
 function buildPrompt(songs){
   const list=songs.map((s,i)=>s.known
-    ?`${i+1}. 「${s.title}」 / ${s.artist||"（アーティスト不明）"}`
+    ?`${i+1}. 「${s.title}」 / ${s.artist||"（アーティスト不明）"}${s.mei?" ※ME:Iの曲。中身をよく知らない場合は、歌詞やメロディを作り話せず、ME:Iらしさやタイトルの印象で語る":""}`
     :`${i+1}. 「${s.t}」 / ${s.a||"（未記入）"} ※特定できなかった曲`).join("\n");
   const recos=AYANE.map((r,i)=>`${i}: ${r.title} — ${r.about}（気分の目安: ${r.vibe}）${r.fans?`\n   ファンの声: ${r.fans}`:""}`).join("\n");
   return `あなたは「みかち」。見た目と口調はギャルだけど、中身は思慮深くて鋭い。音楽の知識があり、人の気持ちの奥まで見ている。ユーザーが今日聴いた3曲を、あなたが聴いた体でレビューするゲームです。
@@ -530,15 +566,20 @@ ${list}
 - 選んだ理由（reco_why、100〜160字）。「ファンの声」から具体的なポイントを1つか2つ拾い、それがその動画のどの瞬間・どんな見どころなのかを言ったうえで、なぜ今日のユーザーに効くのかまで、今日の3曲と結びつけて言う。ファンの声は自分の言葉で言い換える（丸写ししない）。「かわいい」「すごい」だけで終わらせない。
 - 動画に出ている人の名前（文寧、AYANE、あやね など）は出さない。「この子」「この人」と呼ぶ。
 
+## 5. シェア用のひとこと（share、25〜45字）
+ユーザーがXに投稿する用の、3曲まとめてのアゲな感想を1つ。読んだ人まで気分が上がる明るい言い方で、今日の3曲の並びをほめる。ギャル語を1語入れてよい（例：ダンチ、激カワ、VIVA自分、チェケラッチョ、チョ→ブクロ）。曲名とアーティスト名は投稿に別で入るので書かない。動画のことは書かない。
+
 # 候補の動画（全部同じ人のパフォーマンス）
 ${recos}
 
 # 口調
 ギャルの話し言葉で、敬語は使わない。語尾は「〜じゃね？」「〜じゃん？」「〜っしょ」「〜だし」「〜くない？」、相づちは「わかる」「ウケる」「まじ」「それな」「てか」などを自然にまぜる。1つのコメントに2〜3個までにして、同じ言い回しを続けない。「ウケる」は面白いことや意外なことにだけ使い、せつない話には使わない。口調はギャルでも、言っている中身は落ち着いていて思慮深く具体的に。「えぐい」「やばい」「最高」だけで済ませない。絵文字は使わない。
+平成ギャル語をスパイスに入れる。3曲のコメントのうち1つか2つに、次の言葉から1語ずつ使う：ダンチ（段違い）、激カワ、チョッパズ（超恥ずかしい）、ガン寝、オール（朝まで起きてる）、ブクロ（池袋）、ノ→プロ（問題なし）、ゼロイミ（意味ゼロ）、VIVA自分、チェケラッチョ、ラブった（恋に落ちた）、チョヅく（調子に乗る）、アピる、レコ屋、恋バナ、チョ→（超）。
+そのうち1回は「てかそれってチョ→ブクロじゃね！？」のように、意味はよくわからないけどノリで言っちゃう一言にしてよい。その一言のあとは、すぐ落ち着いた思慮深い中身に戻る。毎回同じ言葉を使わない。
 
 # 出力
 次の形のJSONだけを返す:
-{"opener":"最初のひとこと(20〜40字)","songs":[{"vibe":"アゲ","comment":"..."},{"vibe":"...","comment":"..."},{"vibe":"...","comment":"..."}],"mood":"今日の気分(5つのどれか)","cheer":"...","label":"静かに燃えてる","reco_index":0,"reco_why":"..."}`;
+{"opener":"最初のひとこと(20〜40字)","songs":[{"vibe":"アゲ","comment":"..."},{"vibe":"...","comment":"..."},{"vibe":"...","comment":"..."}],"mood":"今日の気分(5つのどれか)","cheer":"...","label":"静かに燃えてる","reco_index":0,"reco_why":"...","share":"..."}`;
 }
 async function askAI(songs){
   if(aiOff)return null;
@@ -573,35 +614,70 @@ function showListening(label){
   return r;
 }
 /* AIがない場所用：iTunesの曲検索で候補を探す（無料・キー不要）。通信できなければ null */
-const normT=x=>String(x||"").toLowerCase().normalize("NFKC").replace(/[\s　・'"’!！?？.,、。〜~ー-]/g,"");
+const normT=x=>String(x||"").toLowerCase().normalize("NFKC").replace(/[ぁ-ゖ]/g,c=>String.fromCharCode(c.charCodeAt(0)+0x60)).replace(/[\s　・'"’!！?？.,、。〜~ー-]/g,"");
 async function searchSongs(s){
   const once=async term=>{
     const ctl=new AbortController();const tm=setTimeout(()=>ctl.abort(),7000);
     try{
-      const u="https://itunes.apple.com/search?country=JP&lang=ja_jp&media=music&entity=song&limit=15&term="+encodeURIComponent(term);
+      const u="https://itunes.apple.com/search?country=JP&lang=ja_jp&media=music&entity=song&limit=25&term="+encodeURIComponent(term);
       const r=await fetch(u,{signal:ctl.signal});if(!r.ok)return null;
       const d=await r.json();return Array.isArray(d.results)?d.results:[];
     }catch(e){return null;}finally{clearTimeout(tm);}
   };
-  let res=await once((s.t+" "+s.a).trim());
-  if(res&&!res.length&&s.a)res=await once(s.t);
-  if(!res)return null;
-  const seen=new Set(),out=[];
-  for(const x of res){
+  /* 曲名だけの検索（有名な曲が上に来る）と、アーティストつきの検索をあわせる */
+  /* ひらがなで入れたときは、カタカナでも探して交互に並べる */
+  const kata=String(s.t).replace(/[ぁ-ゖ]/g,c=>String.fromCharCode(c.charCodeAt(0)+0x60));
+  const soloA=await once(s.t);
+  const soloB=kata!==s.t?await once(kata):[];
+  const both=s.a?await once(s.t+" "+s.a):[];
+  if(soloA==null&&both==null)return null;
+  const solo=[];for(let k=0;k<Math.max((soloA||[]).length,(soloB||[]).length);k++){if(soloA&&soloA[k])solo.push(soloA[k]);if(soloB&&soloB[k])solo.push(soloB[k]);}
+  const has=(u,v)=>{u=normT(u);v=normT(v);return !!u&&!!v&&(u.includes(v)||v.includes(u));};
+  /* 曲名は（ ）の中を除いて比べる。部分一致は長さが近いときだけ */
+  const core=t=>normT(String(t).replace(/[(（\[【][^)）\]】]*[)）\]】]/g,""));
+  const sameTitle=(u,v)=>{u=core(u);v=core(v);if(!u||!v)return false;if(u===v)return true;
+    const [a,b]=u.length<v.length?[u,v]:[v,u];return b.includes(a)&&a.length>=b.length*0.6;};
+  /* オルゴール・ピアノ・BGMなどのカバーは外す */
+  const COVER=/オルゴール|ピアノ|piano|bgm|lab|カバー|cover|カラオケ|karaoke|instrumental|インストゥルメンタル|off vocal|α波|relax|ヒーリング/i;
+  const seen=new Set(),items=[];
+  for(const x of [...solo,...(both||[])]){
     if(!x.trackName)continue;
-    const title=String(x.trackName).replace(/\s*[(（\[][^)）\]]*(ver|version|remix|instrumental|inst|カラオケ|off vocal|live|ライブ)[^)）\]]*[)）\]]/ig,"").replace(/\s+-\s+.*$/,"").trim();
-    const key=normT(title)+"|"+normT(x.artistName);
+    if(COVER.test(x.trackName)||COVER.test(x.artistName||""))continue;
+    const title=String(x.trackName).replace(/\s*[(（\[][^)）\]]*(ver|version|remix|mix|remaster|edit|instrumental|inst|tv size|short|カラオケ|off vocal|live|ライブ|リミックス|ミックス|リマスター|インスト|バージョン)[^)）\]]*[)）\]]/ig,"").replace(/\s+-\s+.*$/,"").trim();
+    const artist=String(x.artistName||"");
+    const key=normT(title)+"|"+normT(artist);
     if(seen.has(key))continue;seen.add(key);
-    out.push({title,artist:String(x.artistName||"")});
-    if(out.length>=3)break;
+    items.push({title,artist,tm:sameTitle(title,s.t),am:!!s.a&&has(artist,s.a)});
   }
-  return out;
+  /* 曲名が合う曲だけにする。1つもなければ、アーティストが合う曲（アーティスト未記入なら全部） */
+  let out=items.filter(x=>x.tm);
+  if(!out.length)out=s.a?items.filter(x=>x.am):items;
+  /* 曲名もアーティストも合う曲 → みかちの推し ME:I → 有名な順 */
+  out.sort((a,b)=>(b.tm&&b.am)-(a.tm&&a.am)||isMEI(b.artist)-isMEI(a.artist));
+  return out.slice(0,6).map(({title,artist})=>({title,artist}));
 }
-function askWhich(i,s,cands){
+/* ME:I かどうか（表記ゆれも見る） */
+function isMEI(a){const n=normT(a);return n==="me:i"||n==="mei"||n==="ミーアイ"?1:0;}
+/* AIの第2弾：さっき出した候補以外で、もう3曲考えてもらう */
+async function moreCandidates(s,shown){
+  if(aiOff)return null;
+  const sample=await getSample();if(!sample)return null;
+  const ex=shown.map(c=>`「${c.title}」 / ${c.artist||""}`).join("、")||"なし";
+  try{
+    const r=await sample.json(`音楽にとても詳しい人として、ユーザーが入力した曲が実在のどの曲かをもう一度考えてください。入力はうろ覚え・誤字・表記ゆれがありえます。
+入力: 曲名「${s.t}」 / アーティスト: ${s.a||"（未記入）"}
+次の候補はユーザーが「違う」と答えたので、入れないでください: ${ex}
+新しめの曲、アルバム曲、カップリング曲、アイドルグループの曲、同じタイトルの別アーティストの曲も考える。候補を有力な順に最大3曲。思いつかなければ空の配列。
+JSONだけを返す: {"candidates":[{"title":"...","artist":"...","note":"判断のヒントになる短いメモ"}]}`,{cache:false,effort:"low"});
+    const seen=new Set(shown.map(c=>normT(c.title)+"|"+normT(c.artist)));
+    return (r&&Array.isArray(r.candidates)?r.candidates:[]).filter(c=>c&&c.title&&!seen.has(normT(c.title)+"|"+normT(c.artist))).slice(0,3);
+  }catch(e){return null;}
+}
+function askWhich(i,s,cands,round2){
   return new Promise(async resolve=>{
     const btns=cands.map((c,k)=>`<button type="button" class="pickbtn" data-k="${k}">${esc(c.artist||"")}「${esc(c.title)}」${c.note?`<small>${esc(c.note)}</small>`:""}</button>`).join("")
       +`<button type="button" class="pickbtn none" data-k="-1">どれでもない</button>`;
-    await say(`<div class="tags"><span class="tag">${i+1}曲目</span><span class="tag guess">確認</span></div>「${esc(s.t)}」${s.a?`（${esc(s.a)}）`:""}って…もしかしてコレェ・・・？<div class="picks">${btns}</div>`);
+    await say(`<div class="tags"><span class="tag">${i+1}曲目</span><span class="tag guess">確認</span></div>「${esc(s.t)}」${s.a?`（${esc(s.a)}）`:""}${round2?"…えー、ちがった？じゃあこっちはどう？":"って…もしかしてコレェ・・・？"}<div class="picks">${btns}</div>`);
     const box=[...document.querySelectorAll(".picks")].pop();
     box.querySelector("button").focus();
     box.addEventListener("click",e=>{
@@ -614,6 +690,13 @@ function askWhich(i,s,cands){
       resolve(c);
     });
   });
+}
+/* アーティストが ME:I なら、候補になくても推しの曲として受け取る（ファンとして「知らない」は言わない） */
+async function meiFallback(i,s){
+  if(!isMEI(s.a))return false;
+  s.known=true;s.title=s.t;s.artist="ME:I";s.mei=true;
+  await say(`<div class="tags"><span class="tag">${i+1}曲目</span><span class="tag">ME:I</span></div>あ、ME:Iの「${esc(s.t)}」ね！てかそれ、うち昨日の夢で文寧ちゃんが歌ってくれたんだけど。まじ極楽だったし。`);
+  return true;
 }
 let running=false;
 async function run(){
@@ -636,14 +719,26 @@ async function run(){
     const r=(ids&&ids[i])||{};
     const cands=Array.isArray(r.candidates)?r.candidates.filter(c=>c&&c.title).slice(0,3):[];
     if(ids&&r.status==="known"&&r.title){s.known=true;s.title=String(r.title);s.artist=String(r.artist||s.a);continue;}
+    if(ids){
+      /* 第1弾 → 違ったら（または候補なしなら）AIに第2弾を考えてもらう */
+      let choice=cands.length?await askWhich(i,s,cands):null;
+      if(!choice){
+        listening=showListening(`みかちが${i+1}曲目をもう一回探してるとこ…`);
+        const more=await moreCandidates(s,cands);
+        listening.remove();
+        if(more&&more.length)choice=await askWhich(i,s,more,cands.length>0);
+      }
+      if(choice){s.known=true;s.title=String(choice.title);s.artist=String(choice.artist||"");continue;}
+      if(await meiFallback(i,s))continue;
+    }
     if(ids&&cands.length){
-      const choice=await askWhich(i,s,cands);
-      if(choice){s.known=true;s.title=String(choice.title);s.artist=String(choice.artist||"");}
-      else{s.known=false;await say(`<div class="tags"><span class="tag">${i+1}曲目</span><span class="tag unknown">みかち知らない曲かも</span></div>そっか〜、じゃあ「${esc(s.t)}」はみかちの知らない曲だわ。タイトルの雰囲気で感想言うけど、いいっしょ？`);}
+      s.known=false;
+      {await say(`<div class="tags"><span class="tag">${i+1}曲目</span><span class="tag unknown">みかち知らない曲かも</span></div>そっか〜、じゃあ「${esc(s.t)}」はみかちの知らない曲だわ。タイトルの雰囲気で感想言うけど、いいっしょ？`);}
       continue;
     }
     if(ids){
       s.known=false;s.checked=true;
+      /* 第2弾も見つからなかったとき */
       await say(`<div class="tags"><span class="tag">${i+1}曲目</span><span class="tag unknown">みかち知らない曲かも</span></div>「${esc(s.t)}」…ごめん、これはみかちの知識にないかも。タイトルの雰囲気で感想言うし！`);
       continue;
     }
@@ -658,10 +753,12 @@ async function run(){
       s.known=true;s.title=top.title;s.artist=top.artist;continue;
     }
     if(found.length){
-      const choice=await askWhich(i,s,found);
+      let choice=await askWhich(i,s,found.slice(0,3));
+      if(!choice&&found.length>3)choice=await askWhich(i,s,found.slice(3,6),true);
       if(choice){s.known=true;s.title=choice.title;s.artist=choice.artist;}
+      else if(await meiFallback(i,s)){}
       else{s.known=false;await say(`<div class="tags"><span class="tag">${i+1}曲目</span><span class="tag unknown">みかち知らない曲かも</span></div>そっか〜、じゃあ「${esc(s.t)}」はみかちの知らない曲だわ。そのまま感想言うっしょ！`);}
-    }else{
+    }else if(!await meiFallback(i,s)){
       s.known=false;
       await say(`<div class="tags"><span class="tag">${i+1}曲目</span><span class="tag unknown">みかち知らない曲かも</span></div>「${esc(s.t)}」…探したけど見つかんなかったんだけど、ウケる。そのまま感想言うね！`);
     }
@@ -737,6 +834,8 @@ async function run(){
   }
   $("#recoBox").scrollIntoView({block:"nearest",behavior:"smooth"});
   out.push(`${sonna} ${rec.title} ${rec.url}`);lastResult=out.join("\n");
+  const shareLine=ai&&ai.share?String(ai.share):pick(SHARE_LINES);
+  $("#xshare").href="https://x.com/intent/post?text="+encodeURIComponent(shareText(songs,shareLine))+"&url="+encodeURIComponent(SITE_URL);
   $("#actions").hidden=false;running=false;$("#go").disabled=false;
 }
 

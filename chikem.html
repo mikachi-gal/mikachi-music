@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>チッケムひろば ランキング</title>
+<meta name="description" content="ME:I 高見文寧ちゃんのチッケムを、昨日・月間・累計の再生数でランキング。毎日自動で更新されるよ。"><meta property="og:type" content="website"><meta property="og:site_name" content="みかちのミュージックひろば"><meta property="og:title" content="チッケムひろば ランキング｜みかちのミュージックひろば"><meta property="og:description" content="ME:I 高見文寧ちゃんのチッケムを、昨日・月間・累計の再生数でランキング。毎日自動で更新されるよ。"><meta property="og:url" content="https://mikachi-gal.github.io/mikachi-music/chikem.html"><meta property="og:image" content="https://mikachi-gal.github.io/mikachi-music/ogp.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="icon" href="favicon.ico" sizes="any"><link rel="icon" type="image/png" href="favicon-32.png"><link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap">
 <style>
 /* Layout: 「今日の3曲」と同じ、赤い星柄のわく＋白いページ。中身は昔の個人サイトのランキング表 */
@@ -47,6 +48,26 @@ td.num.on{background:var(--pinkXL);color:var(--red)}
 tr:nth-child(1) td.rank{color:#d4a000}tr:nth-child(2) td.rank{color:#8a8a9a}tr:nth-child(3) td.rank{color:#b06a2a}
 .note{font-size:11px;color:var(--sub);text-align:center;margin:0}
 .empty{text-align:center;padding:24px 8px;color:var(--sub)}
+/* スマホ：表をやめて1本ずつのカードにする。サムネの右に昨日・月間・累計 */
+@media (max-width:600px){
+  .page{padding:10px 8px 18px}
+  .tab{padding:3px 10px;font-size:13px}
+  table{min-width:0}
+  thead{display:none}
+  tbody,tr,td{display:block}
+  tr{display:grid;grid-template-columns:26px 112px 1fr;grid-template-areas:"rank thumb day" "rank thumb month" "mv thumb total" "cmt cmt cmt";column-gap:8px;padding:8px 6px;border-top:1px solid var(--pinkL)}
+  td{border-top:0;padding:0}
+  td.rank{grid-area:rank;width:auto;align-self:start}
+  td.mv{grid-area:mv;width:auto;align-self:start}
+  td.thumb{grid-area:thumb;width:auto}
+  td.thumb img{width:112px}
+  td.num{width:auto;text-align:right;display:flex;justify-content:space-between;gap:6px;padding:1px 4px}
+  td.num::before{content:attr(data-l);color:var(--sub)}
+  td.num.on::before{color:var(--red)}
+  td.num.d{grid-area:day}td.num.m{grid-area:month}td.num.t{grid-area:total}
+  td.cmt{grid-area:cmt;min-width:0;padding-top:6px}
+  td.empty{grid-column:1/-1;padding:24px 8px}
+}
 </style>
 </head>
 <body>
@@ -104,14 +125,17 @@ function render(){
   const now=ranking(sortKey,last);
   const prevRank={};
   if(last>=1){ranking(sortKey,last-1).forEach((r,k)=>{if(r.v!=null)prevRank[r.id]=k+1;});}
+  /* 前日の順位が1本もない（記録2日目の「昨日」など）ときは、↑↓もNEWも出さない */
+  const hasPrev=Object.keys(prevRank).length>0;
   $("#rows").innerHTML=now.map((r,k)=>{
     const id=r.id,rank=k+1,info=F[id]||{},v=D.videos[id]||{};
     let mv='<span class="same">→</span>';
-    if(prevRank[id]==null)mv=last>=1?'<span class="new">NEW</span>':'';
+    if(!hasPrev)mv='';
+    else if(prevRank[id]==null)mv='<span class="new">NEW</span>';
     else if(prevRank[id]>rank)mv='<span class="up">↑</span>';
     else if(prevRank[id]<rank)mv='<span class="down">↓</span>';
     const url="https://www.youtube.com/watch?v="+encodeURIComponent(id);
-    const cells=["day","month","total"].map(key=>`<td class="num${key===sortKey?" on":""}">${fmt(metric(key,last,id))}</td>`).join("");
+    const cells=[["day","d","昨日"],["month","m","月間"],["total","t","累計"]].map(([key,c,l])=>`<td class="num ${c}${key===sortKey?" on":""}" data-l="${l}">${fmt(metric(key,last,id))}</td>`).join("");
     return `<tr><td class="rank">${rank}</td><td class="mv">${mv}</td>
       <td class="thumb"><a href="${url}" target="_blank" rel="noopener"><img src="https://i.ytimg.com/vi/${esc(id)}/mqdefault.jpg" alt="" loading="lazy"></a></td>
       <td class="cmt"><a class="vt" href="${url}" target="_blank" rel="noopener">${esc(info.title||v.title||id)}</a><span class="fans">${esc(info.fans||"")}</span></td>${cells}</tr>`;
