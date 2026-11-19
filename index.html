@@ -1,4 +1,4 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="description" content="今日聴いた3曲を教えると、ギャルのみかちが感想をくれて、今日のあなたにぴったりのおすすめ動画も教えてくれるよ。"><meta property="og:type" content="website"><meta property="og:site_name" content="みかちのミュージックひろば"><meta property="og:title" content="みかちのミュージックひろば"><meta property="og:description" content="今日聴いた3曲を教えると、ギャルのみかちが感想をくれて、今日のあなたにぴったりのおすすめ動画も教えてくれるよ。"><meta property="og:url" content="https://mikachi-gal.github.io/mikachi-music/"><meta property="og:image" content="https://mikachi-gal.github.io/mikachi-music/ogp.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="icon" href="favicon.ico" sizes="any"><link rel="icon" type="image/png" href="favicon-32.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="description" content="今日聴いた3曲を教えると、ギャルのみかちが感想をくれて、今日のあなたにぴったりのおすすめ動画も教えてくれるよ。"><meta property="og:type" content="website"><meta property="og:site_name" content="みかちのミュージックひろば"><meta property="og:title" content="みかちのミュージックひろば"><meta property="og:description" content="今日聴いた3曲を教えると、ギャルのみかちが感想をくれて、今日のあなたにぴったりのおすすめ動画も教えてくれるよ。"><meta property="og:url" content="https://mikachi-gal.github.io/mikachi-music/"><meta property="og:image" content="https://mikachi-gal.github.io/mikachi-music/ogp.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><link rel="icon" href="favicon.ico" sizes="any"><link rel="icon" type="image/png" href="favicon-32.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><script>window.goatcounter={path:function(p){return p.replace(/index\.html$/,"")}}</script><script data-goatcounter="https://mikachi-music.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script><style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
 <title>みかちのミュージックひろば</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap">
@@ -43,6 +43,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px dashed var(
 
 main{min-width:0;padding:14px 18px 24px;display:flex;flex-direction:column;gap:16px}
 .counter{text-align:center;font-size:13px;color:var(--sub)}
+.kiri{text-align:center;font-size:14px;color:var(--red);background:var(--yellow);border:2px dashed var(--red);padding:6px 8px;animation:blink 1s steps(2) 3}
 .digits{display:inline-flex;gap:1px;vertical-align:middle;margin:0 2px}
 .digits b{font-weight:400;background:var(--ink);color:var(--yellow);padding:0 3px;font-variant-numeric:tabular-nums}
 .banners{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
@@ -181,6 +182,7 @@ input[type=text]{width:100%;min-width:0;font:inherit;font-size:16px;padding:5px 
 
   <main id="play">
     <div class="counter">あなたは <span class="digits" id="digits"></span> 回目のお客様☆ 来てくれてありがと〜</div>
+    <div class="kiri" id="kiri" hidden><span id="kiriMsg"></span> <a class="small xshare" id="kiriShare" href="#" target="_blank" rel="noopener">Xで報告</a></div>
 
     <div class="banners">
       <a class="banner" href="#form"><img class="pix ico" data-ico="note" width="32" height="32" alt=""><span><strong>今日の3曲ひろば</strong><small>3曲書いたら、みかちが的確にレビューするよ</small></span></a>
@@ -902,7 +904,23 @@ try{
 (function counter(){
   let n=1;
   try{n=(parseInt(localStorage.getItem("lilia-visits")||"0",10)||0)+1;localStorage.setItem("lilia-visits",String(n));}catch(e){}
-  $("#digits").innerHTML=String(n).padStart(6,"0").split("").map(x=>`<b>${x}</b>`).join("");
+  const show=v=>{$("#digits").innerHTML=String(v).padStart(6,"0").split("").map(x=>`<b>${x}</b>`).join("");};
+  show(n);
+  /* 公開版はサイト全体の訪問数（GoatCounter）を出す。今の訪問はまだ数に入っていないことがあるので +1 */
+  if(IN_ARTIFACT)return;
+  const path=location.pathname.replace(/index\.html$/,"");
+  fetch("https://mikachi-music.goatcounter.com/counter/"+encodeURIComponent(path)+".json").then(r=>r.ok?r.json():null).then(d=>{
+    const v=parseInt(String(d&&d.count||"").replace(/\D/g,""),10);
+    if(!(v>=0))return;
+    const k=v+1;show(k);
+    /* キリ番：100の倍数、ゾロ目（111・777…）、1234・12345 */
+    const t=String(k);
+    if(k>=100&&(k%100===0||/^(\d)\1+$/.test(t)||"123456789".startsWith(t))){
+      $("#kiriMsg").textContent=`キリ番 ${k} ゲットじゃん！スクショしてXで報告してね♪ 踏み逃げ禁止だかんね！`;
+      $("#kiriShare").href="https://x.com/intent/post?text="+encodeURIComponent(`みかちのミュージックひろばで、キリ番 ${k} 踏んだ！\n#みかちのミュージックひろば`)+"&url="+encodeURIComponent(SITE_URL);
+      $("#kiri").hidden=false;
+    }
+  }).catch(()=>{});
 })();
 $("#go").addEventListener("click",run);
 $("#again").addEventListener("click",run);
