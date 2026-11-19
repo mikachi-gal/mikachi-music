@@ -906,13 +906,9 @@ try{
   try{n=(parseInt(localStorage.getItem("lilia-visits")||"0",10)||0)+1;localStorage.setItem("lilia-visits",String(n));}catch(e){}
   const show=v=>{$("#digits").innerHTML=String(v).padStart(6,"0").split("").map(x=>`<b>${x}</b>`).join("");};
   show(n);
-  /* 公開版はサイト全体の訪問数（GoatCounter）を出す。今の訪問はまだ数に入っていないことがあるので +1 */
   if(IN_ARTIFACT)return;
-  const path=location.pathname.replace(/index\.html$/,"");
-  fetch("https://mikachi-music.goatcounter.com/counter/"+encodeURIComponent(path)+".json").then(r=>(r.ok||r.status===404)?r.json():null).then(d=>{
-    const v=parseInt(String(d&&d.count||"").replace(/\D/g,""),10);
-    if(!(v>=0))return;
-    const k=v+1;show(k);
+  const kiri=k=>{
+    show(k);
     /* キリ番：100の倍数、ゾロ目（111・777…）、1234・12345 */
     const t=String(k);
     if(k>=100&&(k%100===0||/^(\d)\1+$/.test(t)||"123456789".startsWith(t))){
@@ -920,7 +916,21 @@ try{
       $("#kiriShare").href="https://x.com/intent/post?text="+encodeURIComponent(`みかちのミュージックひろばで、キリ番 ${k} 踏んだ！\n#みかちのミュージックひろば`)+"&url="+encodeURIComponent(SITE_URL);
       $("#kiri").hidden=false;
     }
-  }).catch(()=>{});
+  };
+  /* 公開版は自作カウンター（Cloudflare Workers）で、開くたびに1つ進める */
+  const ctl=new AbortController();setTimeout(()=>ctl.abort(),5000);
+  fetch("https://mikachi-kiri.mikachi-music.workers.dev/hit",{method:"POST",signal:ctl.signal}).then(r=>r.ok?r.json():null).then(d=>{
+    const v=d&&Number(d.count);
+    if(v>0)return kiri(v);
+    throw 0;
+  }).catch(()=>{
+    /* 自作カウンターが止まっているときは、GoatCounter の訪問者数＋1 */
+    const path=location.pathname.replace(/index\.html$/,"");
+    fetch("https://mikachi-music.goatcounter.com/counter/"+encodeURIComponent(path)+".json").then(r=>(r.ok||r.status===404)?r.json():null).then(d=>{
+      const v=parseInt(String(d&&d.count||"").replace(/\D/g,""),10);
+      if(v>=0)kiri(v+1);
+    }).catch(()=>{});
+  });
 })();
 $("#go").addEventListener("click",run);
 $("#again").addEventListener("click",run);
