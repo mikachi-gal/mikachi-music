@@ -53,30 +53,33 @@
    "xt32f1QtUYk": 930496
   },
   "2026-11-20": {
-   "-CxB9dittmE": 2440946,
-   "3YA284tXTo0": 128450,
-   "3ZUPrCDEBbA": 143001,
+   "-CxB9dittmE": 2440956,
+   "3YA284tXTo0": 128451,
+   "3ZUPrCDEBbA": 143003,
    "3hpjZ-nKVDg": 1735321,
-   "4Bv6u7laR3U": 1490158,
-   "4w8sykD_IKA": 119637,
-   "8XG6hDbtSio": 193111,
+   "4Bv6u7laR3U": 1490162,
+   "4w8sykD_IKA": 119638,
+   "8XG6hDbtSio": 193109,
    "Ax-G8MC1rCQ": 212910,
-   "D19xxDRbLXg": 1700152,
+   "D19xxDRbLXg": 1700154,
+   "F5ftxL33Q8c": 1211239,
+   "HktljquLczM": 247454,
+   "JZEGUVfqoOY": 2488082,
    "MKjJHJvKzXo": 3558685,
-   "ROJXKYMAqcs": 56048,
-   "SV8qEdEcbuM": 69467,
-   "YPyuK4GlocE": 112027,
-   "ZArnB1QQwDM": 807541,
+   "ROJXKYMAqcs": 56049,
+   "SV8qEdEcbuM": 69468,
+   "YPyuK4GlocE": 112030,
+   "ZArnB1QQwDM": 807549,
    "_KYjAANo5Ro": 74995,
-   "a0A9RBEiJ-o": 3514876,
-   "cTdhfY1B0NI": 53686,
+   "a0A9RBEiJ-o": 3514882,
+   "cTdhfY1B0NI": 53697,
    "dNZCwfaEI6c": 143616,
-   "fz6J_WhIqXA": 359763,
-   "ge5wA7wGn7o": 1104733,
-   "jQ3yVjUYv68": 66746,
-   "no3_GCUoT6A": 69038,
-   "x72W9I75aPs": 565646,
-   "xt32f1QtUYk": 930566
+   "fz6J_WhIqXA": 359764,
+   "ge5wA7wGn7o": 1104744,
+   "jQ3yVjUYv68": 66747,
+   "no3_GCUoT6A": 69035,
+   "x72W9I75aPs": 565651,
+   "xt32f1QtUYk": 930568
   }
  },
  "playlist": [
@@ -103,9 +106,12 @@
   "MKjJHJvKzXo",
   "3hpjZ-nKVDg",
   "8XG6hDbtSio",
-  "no3_GCUoT6A"
+  "no3_GCUoT6A",
+  "HktljquLczM",
+  "JZEGUVfqoOY",
+  "F5ftxL33Q8c"
  ],
- "updated": "2026-11-20T10:43+09:00",
+ "updated": "2026-11-20T11:20+09:00",
  "videos": {
   "-CxB9dittmE": {
    "channel": "PRODUCE 101 JAPAN 新世界",
@@ -151,6 +157,21 @@
    "channel": "PRODUCE 101 JAPAN 新世界",
    "published": "2023-11-13",
    "title": "推しカメラ┊高見文寧（TAKAMI AYANE）✧︎ 宇多田ヒカル ♫ First Love [ポジションバトル｜VOCAL]"
+  },
+  "F5ftxL33Q8c": {
+   "channel": "ME:I",
+   "published": "2025-03-10",
+   "title": "ME:I (ミーアイ)：想像以上 (ME:I Ver.) - Rock Arrange Ver.- @ COUNTDOWN JAPAN 24/25"
+  },
+  "HktljquLczM": {
+   "channel": "ME:I",
+   "published": "2025-11-22",
+   "title": "【耐久Ver.】Royal Energy - Extended Ver. - @ 𝟐𝟎𝟐𝟓 𝐌𝐄:𝐈 𝟏𝐒𝐓 𝐀𝐑𝐄𝐍𝐀 𝐋𝐈𝐕𝐄 𝐓𝐎𝐔𝐑 \"𝐓𝐇𝐈𝐒 𝐈𝐒 𝐌𝐄:𝐈\""
+  },
+  "JZEGUVfqoOY": {
+   "channel": "ME:I",
+   "published": "2024-10-23",
+   "title": "ME:I (ミーアイ)：TOXIC (ME:I Ver.) - Rock Arrange Ver.- @ ROCK IN JAPAN FESTIVAL 2024 in HITACHINAKA"
   },
   "MKjJHJvKzXo": {
    "channel": "PRODUCE 101 JAPAN 新世界",
