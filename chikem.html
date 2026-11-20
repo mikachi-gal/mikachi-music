@@ -78,8 +78,13 @@ tr:nth-child(1) td.rank{color:#d4a000}tr:nth-child(2) td.rank{color:#8a8a9a}tr:n
 </header>
 <main class="page">
   <div class="info">
-    <span id="updated">毎日 夜0時すぎに更新されるよ</span>
+    <span id="updated">毎朝 自動で更新されるよ</span>
     <span class="big" id="count">「チッケム部門」のランキング</span>
+  </div>
+  <div class="tabs" role="group" aria-label="部門">
+    <button type="button" class="tab" data-c="all" aria-pressed="false">すべて</button>
+    <button type="button" class="tab" data-c="chikem" aria-pressed="true">チッケム部門</button>
+    <button type="button" class="tab" data-c="perf" aria-pressed="false">パフォーマンス部門</button>
   </div>
   <div class="tabs" role="group" aria-label="並べかえ">
     <button type="button" class="tab" data-k="day" aria-pressed="true">昨日の再生数順</button>
@@ -98,7 +103,10 @@ tr:nth-child(1) td.rank{color:#d4a000}tr:nth-child(2) td.rank{color:#8a8a9a}tr:n
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const fmt=n=>n==null?"―":n.toLocaleString("ja-JP");
-let D=null,F={},sortKey="day";
+let D=null,F={},sortKey="day",cat="chikem";
+/* 部門：fans.json の cat。なければタイトルで判断 */
+const catOf=id=>{const f=F[id]||{};if(f.cat)return f.cat;return /チッケム|推しカメラ|直カム|직캠|fancam|unfiltered/i.test(f.title||(D.videos[id]||{}).title||"")?"chikem":"perf";};
+const ids=()=>cat==="all"?D.ids:D.ids.filter(id=>catOf(id)===cat);
 
 function metric(key,i,id){
   const dates=D.dates,h=D.history;
@@ -119,7 +127,7 @@ function metric(key,i,id){
   return b==null?null:cur-b;
 }
 function ranking(key,i){
-  return D.ids.map(id=>({id,v:metric(key,i,id)})).sort((a,b)=>(b.v??-1)-(a.v??-1));
+  return ids().map(id=>({id,v:metric(key,i,id)})).sort((a,b)=>(b.v??-1)-(a.v??-1));
 }
 function render(){
   const last=D.dates.length-1;
@@ -142,9 +150,14 @@ function render(){
       <td class="cmt"><a class="vt" href="${url}" target="_blank" rel="noopener">${esc(info.title||v.title||id)}</a><span class="fans">${esc(info.fans||"")}</span></td>${cells}</tr>`;
   }).join("");
 }
-document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{
+document.querySelectorAll(".tab[data-k]").forEach(b=>b.addEventListener("click",()=>{
   sortKey=b.dataset.k;
-  document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-pressed",x===b));
+  document.querySelectorAll(".tab[data-k]").forEach(x=>x.setAttribute("aria-pressed",x===b));
+  if(D)render();
+}));
+document.querySelectorAll(".tab[data-c]").forEach(b=>b.addEventListener("click",()=>{
+  cat=b.dataset.c;
+  document.querySelectorAll(".tab[data-c]").forEach(x=>x.setAttribute("aria-pressed",x===b));
   if(D)render();
 }));
 Promise.all([
@@ -155,12 +168,15 @@ Promise.all([
   const dates=Object.keys(data.history||{}).sort();
   if(!dates.length){$("#rows").innerHTML='<tr><td colspan="7" class="empty">まだ集計前だよ。最初の記録がつくまで待っててね☆</td></tr>';return;}
   D={dates,history:data.history,videos:data.videos||{},ids:(data.playlist&&data.playlist.length)?data.playlist:Object.keys(data.history[dates[dates.length-1]])};
-  $("#updated").textContent=`毎日 夜0時すぎに更新されるよ（前回の更新：${(data.updated||dates[dates.length-1]).replace("T"," ").slice(0,16)}）`;
-  $("#count").textContent=`「チッケム部門」には ${D.ids.length} 本登録されてるよ`;
+  /* fans.json に足したばかりで、まだ記録されていない動画も並べる（再生数は次の記録から） */
+  Object.keys(F).forEach(id=>{if(!D.ids.includes(id))D.ids.push(id);});
+  $("#updated").textContent=`毎朝 自動で更新されるよ（前回の更新：${(data.updated||dates[dates.length-1]).replace("T"," ").slice(0,16)}）`;
+  const nc=D.ids.filter(id=>catOf(id)==="chikem").length;
+  $("#count").textContent=`チッケム部門には ${nc} 本・パフォーマンス部門には ${D.ids.length-nc} 本登録されているよ`;
   if(dates.length<2){
     $("#count").textContent+="　※「昨日」は2日目から出るよ";
     sortKey="total";
-    document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-pressed",x.dataset.k==="total"));
+    document.querySelectorAll(".tab[data-k]").forEach(x=>x.setAttribute("aria-pressed",x.dataset.k==="total"));
   }
   render();
 }).catch(()=>{$("#rows").innerHTML='<tr><td colspan="7" class="empty">データを読み込めなかったよ。時間をおいて開き直してね。</td></tr>';});
