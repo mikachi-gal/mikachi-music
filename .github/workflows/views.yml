@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  pages: write
 
 jobs:
   record:
@@ -28,3 +29,8 @@ jobs:
           git add data/views.json
           git diff --cached --quiet || git commit -m "再生数を記録"
           git push
+      # このワークフローの保存ではサイトが作り直されないので、作り直しを頼む
+      - name: サイトに反映
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/pages/builds"
